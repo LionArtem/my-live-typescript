@@ -1,9 +1,9 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { auth } from '../../utils/Auth';
+import { auth } from "../../utils/Auth";
 
 export const fetchAddUser = createAsyncThunk(
-  'page/fetchAddUser',
+  "page/fetchAddUser",
   async (params, thunkAPI) => {
     const data = await auth.addUser(params.email, params.password);
     return data;
@@ -11,40 +11,48 @@ export const fetchAddUser = createAsyncThunk(
 );
 
 export const fetchLoginUser = createAsyncThunk(
-  'page/fetchLoginUser',
+  "page/fetchLoginUser",
   async (params, thunkAPI) => {
     const data = await auth.loginUser(params.email, params.password);
     return data;
   }
 );
 
-const initialState = {
+interface AuthSliceState {
+  fopmReg: boolean;
+  fopmSign: boolean;
+  token: string | null;
+  showPreloader: boolean;
+  textArrAnswerServer: string;
+}
+
+const initialState: AuthSliceState = {
   fopmReg: false,
   fopmSign: false,
-  token: localStorage.getItem('token'),
+  token: localStorage.getItem("token"),
   showPreloader: false,
-  textArrAnswerServer: '',
+  textArrAnswerServer: "",
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     resetTextArrAnswerServer(state) {
-      state.textArrAnswerServer = '';
+      state.textArrAnswerServer = "";
     },
     killAllStateAuth(state) {
       state.fopmReg = false;
       state.fopmSign = false;
-      state.token = '';
+      state.token = "";
       state.showPreloader = false;
-      state.textArrAnswerServer = '';
+      state.textArrAnswerServer = "";
     },
     resetForm(state) {
       state.fopmReg = false;
       state.fopmSign = false;
       state.showPreloader = false;
-      state.textArrAnswerServer = '';
+      state.textArrAnswerServer = "";
     },
     setfopmReg(state) {
       state.fopmReg = true;
@@ -62,7 +70,7 @@ const authSlice = createSlice({
       //console.log(payload);
     });
     builder.addCase(fetchAddUser.rejected, (state, action) => {
-      console.log('ошибка регистрации');
+      console.log("ошибка регистрации");
       state.textArrAnswerServer = action.error.message;
       state.showPreloader = false;
     });
@@ -72,13 +80,13 @@ const authSlice = createSlice({
       //console.log('запрос на авторизацию');
     });
     builder.addCase(fetchLoginUser.fulfilled, (state, { payload }) => {
-      localStorage.setItem('token', payload.token);
+      localStorage.setItem("token", payload.token);
       state.token = payload.token;
     });
     builder.addCase(fetchLoginUser.rejected, (state, action) => {
       state.textArrAnswerServer = action.error.message;
       state.showPreloader = false;
-      console.log('ошибка авторизации');
+      console.log("ошибка авторизации");
     });
   },
 });

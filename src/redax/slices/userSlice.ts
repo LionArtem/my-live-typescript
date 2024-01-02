@@ -1,18 +1,30 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { usersApi } from '../../utils/UserApi';
-import { notAuthRequest } from '../../utils/NotAuthRequest';
+import { usersApi } from "../../utils/UserApi";
+import { notAuthRequest } from "../../utils/NotAuthRequest";
+
+type User = {
+  admin: boolean;
+  age: number;
+  avatar: string;
+  email: string;
+  gender: string;
+  name: string;
+  town: string;
+  __v: number;
+  _id: string;
+};
 
 export const fetchGetUser = createAsyncThunk(
-  'page/fetchGetUser',
-  async (params, thunkAPI) => {
+  "page/fetchGetUser",
+  async (params) => {
     const data = await usersApi.getUserMe(params);
     return data;
   }
 );
 
 export const fetchPatchUser = createAsyncThunk(
-  'page/fetchPatchUser',
+  "page/fetchPatchUser",
   async (params, thunkAPI) => {
     const { age, email, name, gender } =
       thunkAPI.getState().formValidetion.value;
@@ -32,7 +44,7 @@ export const fetchPatchUser = createAsyncThunk(
 );
 
 export const fetchGetUserId = createAsyncThunk(
-  'page/fetchGetUserId',
+  "page/fetchGetUserId",
   async (params, thunkAPI) => {
     const data = await usersApi.getUserId(params.id);
     return data;
@@ -40,7 +52,7 @@ export const fetchGetUserId = createAsyncThunk(
 );
 
 export const fetchGetUserFindId = createAsyncThunk(
-  'page/fetchGetUserFindId',
+  "page/fetchGetUserFindId",
   async (params, thunkAPI) => {
     const data = await notAuthRequest.getUserFindId(params.arrIdUser);
     return { data, topic: params.messages };
@@ -49,10 +61,10 @@ export const fetchGetUserFindId = createAsyncThunk(
 
 const initialState = {
   user: {},
-  admin: localStorage.getItem('admin'),
+  admin: localStorage.getItem("admin"),
   allMessagesAndAuthors: [],
   showPreloader: false,
-  textAnswerRequest: '',
+  textAnswerRequest: "",
   successRequest: false,
   showSceletonPage: false,
   errServer: false,
@@ -60,7 +72,7 @@ const initialState = {
 };
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     resetUserAvatar(state, action) {
@@ -76,7 +88,7 @@ const userSlice = createSlice({
       state.user = {};
       state.allMessagesAndAuthors = [];
       state.showPreloader = false;
-      state.textAnswerRequest = '';
+      state.textAnswerRequest = "";
       state.successRequest = false;
       state.showSceletonPage = false;
       state.errServer = false;
@@ -93,12 +105,12 @@ const userSlice = createSlice({
       // console.log(payload);
       state.user = payload;
       state.admin = payload.admin;
-      localStorage.setItem('userId', payload._id);
-      localStorage.setItem('admin', payload.admin);
+      localStorage.setItem("userId", payload._id);
+      localStorage.setItem("admin", payload.admin);
       state.showSceletonPage = false;
     });
     builder.addCase(fetchGetUser.rejected, (state, action) => {
-      console.log('ошибка запроса на получение пользователя');
+      console.log("ошибка запроса на получение пользователя");
       state.showSceletonPage = false;
       state.errServer = true;
       console.log(action);
@@ -111,13 +123,13 @@ const userSlice = createSlice({
     });
     builder.addCase(fetchPatchUser.fulfilled, (state, { payload }) => {
       state.user = payload;
-      localStorage.setItem('userId', payload._id);
+      localStorage.setItem("userId", payload._id);
       state.showPreloader = false;
-      state.textAnswerRequest = 'изменения сохранены';
+      state.textAnswerRequest = "изменения сохранены";
       state.successRequest = true;
     });
     builder.addCase(fetchPatchUser.rejected, (state, action) => {
-      console.log('ошибка запроса на редактирование пользователя');
+      console.log("ошибка запроса на редактирование пользователя");
       console.log(action);
       state.showPreloader = false;
       state.textAnswerRequest = action.error.message;
@@ -125,11 +137,11 @@ const userSlice = createSlice({
 
     // запрос на получение пользователя по id
     builder.addCase(fetchGetUserId.pending, (state) => {
-      console.log('запрос на получение пользователя по id');
+      console.log("запрос на получение пользователя по id");
     });
     builder.addCase(fetchGetUserId.fulfilled, (state, { payload }) => {});
     builder.addCase(fetchGetUserId.rejected, (state) => {
-      console.log('ошибка запроса получение пользователя по id');
+      console.log("ошибка запроса получение пользователя по id");
     });
 
     // запрос на получение пользователя по массиву id
@@ -152,7 +164,7 @@ const userSlice = createSlice({
     });
     builder.addCase(fetchGetUserFindId.rejected, (state, action) => {
       console.log(action);
-      console.log('ошибка запроса получение пользователя по массиву id');
+      console.log("ошибка запроса получение пользователя по массиву id");
       state.errServerUserMessage = true;
     });
   },
