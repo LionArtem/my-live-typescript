@@ -1,19 +1,29 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { auth } from "../../utils/Auth";
+import { User } from "./userSlice";
+import { RootState } from "../store";
+
+type UserCreateParams = {
+  email: string;
+  password: string;
+};
 
 export const fetchAddUser = createAsyncThunk(
   "page/fetchAddUser",
-  async (params, thunkAPI) => {
-    const data = await auth.addUser(params.email, params.password);
+  async (params: UserCreateParams) => {
+    const data: User = await auth.addUser(params.email, params.password);
     return data;
   }
 );
 
 export const fetchLoginUser = createAsyncThunk(
   "page/fetchLoginUser",
-  async (params, thunkAPI) => {
-    const data = await auth.loginUser(params.email, params.password);
+  async (params: UserCreateParams) => {
+    const data: { token: string } = await auth.loginUser(
+      params.email,
+      params.password
+    );
     return data;
   }
 );
@@ -71,7 +81,11 @@ const authSlice = createSlice({
     });
     builder.addCase(fetchAddUser.rejected, (state, action) => {
       console.log("ошибка регистрации");
-      state.textArrAnswerServer = action.error.message;
+
+      if (action.error.message) {
+        state.textArrAnswerServer = action.error.message;
+      }
+
       state.showPreloader = false;
     });
 
@@ -84,14 +98,17 @@ const authSlice = createSlice({
       state.token = payload.token;
     });
     builder.addCase(fetchLoginUser.rejected, (state, action) => {
-      state.textArrAnswerServer = action.error.message;
+      if (action.error.message) {
+        state.textArrAnswerServer = action.error.message;
+      }
+
       state.showPreloader = false;
       console.log("ошибка авторизации");
     });
   },
 });
 
-export const selectAuth = (state) => state.auth;
+export const selectAuth = (state: RootState) => state.auth;
 
 export const {
   setfopmReg,

@@ -3,10 +3,10 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { usersApi } from "../../utils/UserApi";
 import { notAuthRequest } from "../../utils/NotAuthRequest";
 
-type User = {
+export type User = {
   admin: boolean;
   age: number;
-  avatar: string;
+  avatar?: string;
   email: string;
   gender: string;
   name: string;
