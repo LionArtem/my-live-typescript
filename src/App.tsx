@@ -1,23 +1,24 @@
-import React from 'react';
+import React from "react";
 
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
 
-import Home from './components/Home/Home';
-import ForumTopics from './components/ForumTopics/ForumTopics';
-import Topic from './components/ForumTopics/Topic/Topic';
-import MyPage from './components/Pages/MyPage/MyPage';
-import FormEditUser from './components/Pages/FormEditUser/FormEditUser';
-import NotFoundPage from './components/Pages/NotFoundPage/NotFoundPage';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectAuth } from './redax/slices/authSlice';
-import PageAdmin from './components/Pages/PageAdmin/PageAdmin';
-import ListUser from './components/Pages/ListUsers/ListUsers';
+import Home from "./components/Home/Home";
+import ForumTopics from "./components/ForumTopics/ForumTopics";
+import Topic from "./components/ForumTopics/Topic/Topic";
+import MyPage from "./components/Pages/MyPage/MyPage";
+import FormEditUser from "./components/Pages/FormEditUser/FormEditUser";
+import NotFoundPage from "./components/Pages/NotFoundPage/NotFoundPage";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "./redax/store";
+import { selectAuth } from "./redax/slices/authSlice";
+import PageAdmin from "./components/Pages/PageAdmin/PageAdmin";
+import ListUser from "./components/Pages/ListUsers/ListUsers";
 
-import { selectUser, fetchGetUser } from './redax/slices/userSlice';
-import PageUser from './components/Pages/PageUser/PageUser';
+import { selectUser, fetchGetUser } from "./redax/slices/userSlice";
+import PageUser from "./components/Pages/PageUser/PageUser";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { token } = useSelector(selectAuth);
 

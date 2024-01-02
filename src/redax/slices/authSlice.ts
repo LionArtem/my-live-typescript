@@ -18,13 +18,13 @@ export const fetchLoginUser = createAsyncThunk(
   }
 );
 
-interface AuthSliceState {
+export type AuthSliceState = {
   fopmReg: boolean;
   fopmSign: boolean;
   token: string | null;
   showPreloader: boolean;
   textArrAnswerServer: string;
-}
+};
 
 const initialState: AuthSliceState = {
   fopmReg: false,

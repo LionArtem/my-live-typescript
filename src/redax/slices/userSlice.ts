@@ -17,9 +17,9 @@ type User = {
 
 export const fetchGetUser = createAsyncThunk(
   "page/fetchGetUser",
-  async (params) => {
+  async (params: string) => {
     const data = await usersApi.getUserMe(params);
-    return data;
+    return data as User;
   }
 );
 
