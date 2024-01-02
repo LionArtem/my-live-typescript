@@ -1,0 +1,32 @@
+.ListUsers {
+  display: flex;
+  flex-direction: column;
+}
+
+.conteinerButton {
+  display: flex;
+  column-gap: 11px;
+  border-bottom: 1px solid white;
+}
+
+.ListUsers_containerCard {
+  all: unset;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 20px;
+  li {
+    all: unset;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .ListUsers_containerCard {
+    padding: 10px 0px;
+    gap: 10px;
+  }
+}

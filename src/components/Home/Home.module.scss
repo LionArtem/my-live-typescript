@@ -1,0 +1,9 @@
+.page {
+  display: grid;
+  grid-template-rows: min-content auto min-content;
+  min-height: 98vh;
+  box-sizing: border-box;
+  main {
+    border-bottom: 1px solid white;
+  }
+}

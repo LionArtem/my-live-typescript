@@ -1,0 +1,64 @@
+nav {
+  padding: 5px 0px;
+  margin: 0px 10px 25px 10px;
+  box-sizing: border-box;
+  overflow-y: hidden;
+}
+
+nav::-webkit-scrollbar {
+  height: 12px; /* высота для горизонтального скролла */
+  background-color: rgb(206, 209, 212);
+}
+/* ползунок скроллбара */
+nav::-webkit-scrollbar-thumb {
+  background-color: #000000;
+  border-radius: 9em;
+}
+
+nav::-webkit-scrollbar-thumb:hover {
+  background-color: #3a3a3c;
+}
+/* Стрелки */
+nav::-webkit-scrollbar-button:horizontal:start:decrement {
+  background: linear-gradient(30deg, #92c898 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(150deg, #92c898 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(270deg, #92c898 10%, rgba(0, 0, 0, 0) 31%);
+  background-color: #000000;
+}
+
+nav::-webkit-scrollbar-button:horizontal:end:increment {
+  background: linear-gradient(210deg, #92c898 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(330deg, #92c898 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(90deg, #92c898 10%, rgba(0, 0, 0, 0) 31%);
+  background-color: #000000;
+}
+
+.list {
+  all: unset;
+  display: flex;
+  width: min-content;
+  margin: auto;
+  column-gap: 6px;
+  padding: 5px 0px 5px;
+  li {
+    all: unset;
+    padding: 3px 3px;
+    border: 1px solid black;
+    min-width: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s linear;
+    &:hover {
+      transform: translateY(-3px);
+    }
+    @media (hover: none) and (pointer: coarse) {
+      &:hover {
+        transform: translateY(0px);
+      }
+    }
+  }
+
+  .active {
+    background-color: rgb(95, 175, 88);
+  }
+}

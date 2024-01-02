@@ -1,0 +1,18 @@
+.buttonDelete {
+  border: 1px solid #b44747;
+  padding: 3px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #7fc287;
+  font-family: 'Oswald';
+  font-weight: 600;
+  font-size: 1.2em;
+}
+
+@media screen and (max-width: 360px) {
+  .buttonDelete {
+    padding: 2px;
+    font-weight: 400;
+    font-size: 0.8em;
+  }
+}

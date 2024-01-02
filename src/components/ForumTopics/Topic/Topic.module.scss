@@ -1,0 +1,117 @@
+.topic {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: min-content min-content auto min-content min-content;
+}
+
+.conteiner_navigation {
+  display: flex;
+  flex-direction: column;
+  column-gap: 7px;
+  .buttons_navigation {
+    display: flex;
+    column-gap: 7px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .conteiner_navigation {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}
+
+.info_topic {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid rgb(216, 224, 231);
+  padding: 5px;
+  margin-bottom: 20px;
+  background-color: rgb(163, 201, 169);
+  h1 {
+    margin: 0px 10px 0px 0px;
+    color: rgb(16, 33, 117);
+    font-family: "Caprasimo";
+  }
+
+  @media screen and (max-width: 510px) {
+    h1 {
+      font-size: 1em;
+      letter-spacing: 1px;
+    }
+  }
+}
+
+@media screen and (max-width: 810px) {
+  .info_topic {
+    flex-direction: column-reverse;
+    align-items: start;
+    row-gap: 7px;
+  }
+}
+
+.use_conteiner {
+  display: grid;
+  grid-template-columns: min-content auto;
+  grid-template-rows: min-content;
+  grid-template-areas:
+    "foto name"
+    "foto sity"
+    "foto data";
+  column-gap: 5px;
+  .name {
+    grid-area: name;
+    display: flex;
+    align-items: center;
+    h3 {
+      cursor: pointer;
+      margin: 0;
+      font-size: 1em;
+    }
+    @media screen and (max-width: 810px) {
+      .h3 {
+        font-weight: 600;
+      }
+    }
+
+    @media screen and (max-width: 430px) {
+      .h3 {
+        font-size: 0.8em;
+        font-weight: 600;
+      }
+    }
+  }
+
+  p {
+    grid-area: sity;
+    margin: 0;
+    font-size: 0.8em;
+    align-self: center;
+  }
+
+  @media screen and (max-width: 430px) {
+    p {
+      font-size: 0.7em;
+    }
+  }
+
+  span {
+    grid-area: data;
+    font-size: 0.8em;
+  }
+
+  @media screen and (max-width: 400px) {
+    span {
+      font-size: 0.6em;
+    }
+  }
+
+  img {
+    grid-area: foto;
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    padding: 5px 0px 5px;
+  }
+}

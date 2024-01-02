@@ -1,0 +1,50 @@
+.containerQuote {
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
+  margin: 0;
+  height: 18px;
+  padding: 10px 0px 2px 25px;
+  width: 90%;
+  color: rgb(237, 237, 237);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  .containerQuote_title {
+    color: rgb(58, 58, 189);
+  }
+  .containerQuote_subtitle {
+    font-style: italic;
+  }
+  .containerQuote_delete {
+    width: 17px;
+    height: 17px;
+    background-image: url('../../image/896.svg');
+    background-size: contain;
+    cursor: pointer;
+  }
+}
+
+.form {
+  padding: 0px 0px 30px 0px;
+  display: flex;
+  flex-direction: column;
+  textarea {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0px auto;
+    height: 80px;
+    resize: none;
+    font-size: 22px;
+    background-color: rgb(250, 250, 250);
+    &::-webkit-scrollbar {
+      width: 0px;
+      height: 0px;
+    }
+  }
+  @media screen and (max-width: 385px) {
+    textarea {
+      width: 90%;
+    }
+  }
+}

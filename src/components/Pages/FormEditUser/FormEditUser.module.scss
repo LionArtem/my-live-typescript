@@ -1,0 +1,141 @@
+.conteiner {
+  display: flex;
+  flex-direction: column;
+}
+
+.conteinerButton {
+  display: flex;
+  column-gap: 11px;
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid rgb(232, 230, 230);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  border: 1px solid rgb(232, 230, 230);
+  padding: 5px;
+
+  .text_err_server {
+    margin: 15vh 0px 15vh;
+    color: rgb(150, 15, 15);
+  }
+
+  .title {
+    font-family: "Caprasimo";
+    color: rgb(16, 33, 117);
+    font-size: 1.2em;
+  }
+
+  input {
+    height: 20px;
+    font-family: "Sometype Mono";
+    font-weight: 400;
+    font-size: 1.2em;
+  }
+
+  .conteiner_town {
+    position: relative;
+  }
+
+  .conteiner_label_town {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    cursor: pointer;
+    margin: 0px auto 10px;
+    border: 1px solid rgb(232, 230, 230);
+    padding: 1px 4px;
+    border-radius: 2px;
+    background-color: rgb(216, 224, 231);
+  }
+
+  .label_icon_off {
+    background-image: url(../../../image/261.svg);
+    width: 15px;
+    height: 15px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 5px;
+  }
+  .label_icon_onn {
+    background-image: url(../../../image/262.svg);
+  }
+
+  .label_town {
+    cursor: pointer;
+    user-select: none;
+    width: max-content;
+    font-family: "Caprasimo";
+    color: rgb(16, 33, 117);
+    font-size: 1.2em;
+    font-weight: 600;
+  }
+
+  .town {
+    margin: 0px 0px 10px 0px;
+    background-color: rgb(253, 253, 253);
+    max-width: 100%;
+    padding: 3px 1px;
+    border: 1px solid rgb(133, 133, 133);
+    vertical-align: bottom;
+    font-family: "Sometype Mono";
+    font-weight: 400;
+    font-size: 1.2em;
+  }
+
+  .cities {
+    all: unset;
+    width: 95%;
+    height: 200px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #92c898;
+    padding: 7px;
+    border: 1px solid rgb(232, 230, 230);
+    position: absolute;
+  }
+
+  .cities_off {
+    display: none;
+  }
+
+  .list_town {
+    all: unset;
+    cursor: pointer;
+    padding: 3px 0px;
+    font-family: "Caprasimo";
+    font-size: 1.2em;
+  }
+
+  .list_town:hover {
+    color: rgb(47, 47, 47);
+  }
+
+  .conteiner_age_gender {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    width: 200px;
+    margin: 0 auto;
+  }
+  .age {
+    width: 35px;
+  }
+  .radio {
+    width: 15px;
+    margin: 0;
+  }
+
+}
+
+@media screen and (max-width: 360px) {
+  .form {
+    width: auto;
+  }
+}

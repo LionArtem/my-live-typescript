@@ -1,0 +1,10 @@
+.contener_auth {
+  border-bottom: 1px solid white;
+  .button_open {
+    cursor: pointer;
+    width: 60px;
+    &:hover {
+      text-shadow: 1px 1px #524e4e;
+    }
+  }
+}

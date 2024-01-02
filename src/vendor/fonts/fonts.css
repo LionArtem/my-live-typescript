@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'Caprasimo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('Caprasimo-Regular.ttf') format('ttf');
+}
+
+@font-face {
+    font-family: 'Sometype Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('SometypeMono-Regular.ttf') format('ttf');
+  }
+
+  @font-face {
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('Oswald-VariableFont_wght.ttf') format('ttf');
+  }
+

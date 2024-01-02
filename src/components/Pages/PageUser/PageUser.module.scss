@@ -1,0 +1,37 @@
+.pageUser {
+}
+
+.pageUser_userCard {
+  padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 7px;
+  .foto {
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+    border-radius: 3px;
+  }
+
+  .fotoCursor {
+    cursor: pointer;
+  }
+
+  p {
+    font-family: 'Sometype Mono';
+    font-size: 1.1em;
+    margin: 0px 0px 0px 5px;
+  }
+}
+
+.pageUser_buttonContainer {
+  display: flex;
+  column-gap: 8px;
+  border-bottom: 1px solid white;
+}
+
+@media screen and (max-width:360px) {
+  .pageUser_userCard{
+    align-items: center;
+  }
+}

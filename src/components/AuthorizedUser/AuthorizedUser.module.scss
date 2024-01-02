@@ -1,0 +1,19 @@
+.contener_auth {
+  border-bottom: 1px solid white;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 0px;
+  font-family: 'Caprasimo';
+  font-size: 1em;
+  color: rgb(64, 65, 69);
+  .button_open {
+    all: unset;
+    margin: 0;
+    cursor: pointer;
+    transition: text-shadow 0.3s linear;
+    &:hover {
+      text-shadow: 1px 1px #524e4e;
+    }
+  }
+}

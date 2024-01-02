@@ -1,0 +1,40 @@
+.conteiner {
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: min-content min-content auto min-content;
+  form {
+    display: grid;
+    grid-template-columns: 255px 175px;
+    grid-template-rows: 80px;
+    justify-self: start;
+    margin-left: 50px;
+    margin-bottom: 5px;
+    input {
+      all: unset;
+      height: 28px;
+      width: 250px;
+      border-bottom: 1px solid rgb(216, 224, 231);
+      margin-right: 5px;
+      text-align: center;
+    }
+    .error {
+      display: block;
+      width: 250px;
+      min-height: 30px;
+      font-size: 15px;
+      line-height: 15px;
+      color: brown;
+      text-align: center;
+      padding: 5px;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    form {
+      grid-template-columns: min-content;
+      grid-template-rows: 65px 60px;
+      margin: auto;
+    }
+  }
+}

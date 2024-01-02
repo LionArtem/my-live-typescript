@@ -1,0 +1,51 @@
+.overfloy {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  background-color: rgba(108, 148, 113, 0.9);
+  display: flex;
+}
+
+.window {
+  width: 30vh;
+  margin: auto;
+  padding: 10px;
+  background-color: aliceblue;
+  text-align: center;
+  border-radius: 3px;
+  display: grid;
+  column-gap: 20px;
+  justify-content: center;
+  grid-template-columns: repeat(2, min-content);
+  grid-template-rows: repeat(2, min-content);
+  grid-template-areas:
+    'title title'
+    'yes no';
+
+  .title {
+    grid-area: title;
+
+    font-weight: 600;
+  }
+
+  .button {
+    border: 1px solid rgba(108, 148, 113);
+    border-radius: 3px;
+    padding: 3px;
+    width: 30px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .buttonYes {
+    grid-area: yes;
+    color: #b44747;
+  }
+
+  .buttonNo {
+    grid-area: no;
+    color: rgb(16, 33, 117);
+  }
+}

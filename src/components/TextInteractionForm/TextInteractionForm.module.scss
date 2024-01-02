@@ -1,0 +1,21 @@
+.error {
+  display: block;
+ // width: max-content;
+  min-height: 15px;
+  max-width: 100%;
+  font-size: 15px;
+  line-height: 15px;
+  color: brown;
+  padding: 5px 0px 5px;
+}
+
+@media screen and (max-width: 500px) {
+  .error {
+    font-size: 12px;
+    line-height: 12px;
+  }
+}
+
+.success {
+  color: rgb(79, 99, 216);
+}

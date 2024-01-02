@@ -1,0 +1,79 @@
+.form {
+  max-width: 50vh;
+  width: 100%;
+  height: 50vh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid aliceblue;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #92c898;
+  .button_close {
+    background-image: url(../../image/x.svg);
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    color: rgb(26, 25, 25);
+    border: 1px solid white;
+    position: relative;
+    background-color: aliceblue;
+    border-radius: 3px;
+    top: -40px;
+    right: -330px;
+    cursor: pointer;
+    &:hover {
+      text-shadow: 1px 1px #524e4e;
+    }
+  }
+  .title {
+    color: aliceblue;
+    margin: 0px auto;
+    font-size: 1.5em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: rgb(16, 33, 117);
+    font-family: 'Caprasimo';
+  }
+  input {
+    height: 20px;
+    font-family: 'Sometype Mono';
+    font-size: 1.1em;
+  }
+  .button {
+    all: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    text-align: center;
+    background-color: rgb(216, 224, 231);
+    margin: 0px auto;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+      text-shadow: 1px 1px #524e4e;
+    }
+  }
+
+  .button_Off {
+    cursor: none;
+    color: rgb(119, 115, 115);
+    &:hover {
+      text-shadow: none;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .form {
+    width: 265px;
+    .button_close {
+      top: -45px;
+      right: -255px;
+    }
+  }
+}

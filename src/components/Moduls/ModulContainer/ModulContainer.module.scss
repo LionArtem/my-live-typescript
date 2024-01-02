@@ -1,0 +1,10 @@
+.overflow {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  background-color: rgba(108, 148, 113, 0.9);
+  display: flex;
+  z-index: 1;
+}

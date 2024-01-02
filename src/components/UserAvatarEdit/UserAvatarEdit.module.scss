@@ -1,0 +1,43 @@
+.container_avatar {
+  display: flex;
+  img {
+    width: 200px;
+    height: 150px;
+    object-fit: contain;
+    margin: 0px 0px 2px 0px;
+    border: 1px solid rgb(232, 230, 230);
+    padding: 3px;
+  }
+  .containerButton {
+    padding-left: 5px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    .button {
+      width: 30px;
+      height: 30px;
+      background-size: cover;
+      cursor: pointer;
+      border: 1px rgb(255, 254, 254) solid;
+      border-radius: 3px;
+    }
+    .button_delete_foto {
+      background-image: url(../../image/896.svg);
+    }
+    .button_edit_foto {
+      background-image: url(../../image/445-2.png);
+    }
+  }
+}
+
+.input_file {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+@media screen and (max-width: 360px) {
+  .container_avatar {
+    justify-content: center;
+  }
+}

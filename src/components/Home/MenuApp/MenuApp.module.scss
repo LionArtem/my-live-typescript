@@ -1,0 +1,25 @@
+.list {
+  all: unset;
+  padding: 15px 10px 10px 0px;
+  display: block;
+  li {
+    all: unset;
+    a {
+      all: unset;
+      cursor: pointer;
+      width: min-content;
+      display: block;
+      transition: transform 0.5s linear;
+      &:hover {
+        transform: translateX(10px);
+      }
+    }
+  }
+}
+
+.title {
+  margin: 0;
+  color: rgb(16, 33, 117);
+  font-family: 'Caprasimo';
+  font-size: 2em;
+}

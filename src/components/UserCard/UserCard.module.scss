@@ -1,0 +1,60 @@
+.info_user {
+  height: 100%;
+  border: 1px solid rgb(232, 230, 230);
+  box-sizing: border-box;
+  width: 200px;
+  padding: 5px;
+  cursor: pointer;
+  p {
+    font-family: 'Sometype Mono';
+    font-size: 1.1em;
+  }
+}
+
+.foto {
+  width: 170px;
+  height: 170px;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+  border-radius: 3px;
+}
+
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'Caprasimo';
+  font-size: 1.4em;
+  color: rgb(16, 33, 117);
+}
+
+.email {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 360px) {
+  .info_user {
+    width: 150px;
+    padding: 3px;
+    p {
+      font-size: 0.8em;
+      margin: 6px 0px;
+    }
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .foto {
+    width: 142px;
+    height: 142px;
+    border-radius: 2px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .name {
+    font-size: 1.1em;
+    margin: 8px 0px;
+  }
+}

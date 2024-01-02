@@ -1,0 +1,15 @@
+.footer {
+  display: flex;
+  justify-content: end;
+  padding: 10px 10px 0px 0px;
+}
+.footer::after {
+  content: '';
+  display: block;
+  height: 30px;
+  width: 65px;
+  background-image: url(../../image/abfc9d1c-d31f-41d0-9b0a-0e8dd580a79e.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 3px;
+}
