@@ -1,4 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
+
+export type FormValidetionValue = {
+  age: number;
+  email: string;
+  gender: string;
+  name: string;
+};
+
+interface FormValidetion {
+  value: FormValidetionValue;
+}
 
 const initialState = {
   value: {},
@@ -7,7 +18,7 @@ const initialState = {
 };
 
 const formValidetionSlice = createSlice({
-  name: 'formValidetion',
+  name: "formValidetion",
   initialState,
   reducers: {
     killAllStateFormValidetion(state) {
@@ -32,7 +43,7 @@ const formValidetionSlice = createSlice({
     resetValues(state) {
       state.value = {};
     },
-    setValid(state,{payload}) {
+    setValid(state, { payload }) {
       state.valid = payload;
     },
   },

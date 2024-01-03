@@ -2,8 +2,18 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { usersApi } from "../../utils/UserApi";
 import { notAuthRequest } from "../../utils/NotAuthRequest";
+import { FormValidetionValue } from "./formValidetionSlice";
 
-export type User = {
+type Id = {
+  id: string;
+};
+
+type UserPathParams = {
+  town: string;
+  token: string;
+};
+
+export interface User {
   admin: boolean;
   age: number;
   avatar?: string;
@@ -13,39 +23,45 @@ export type User = {
   town: string;
   __v: number;
   _id: string;
-};
+}
 
 export const fetchGetUser = createAsyncThunk(
   "page/fetchGetUser",
   async (params: string) => {
-    const data = await usersApi.getUserMe(params);
-    return data as User;
-  }
-);
-
-export const fetchPatchUser = createAsyncThunk(
-  "page/fetchPatchUser",
-  async (params, thunkAPI) => {
-    const { age, email, name, gender } =
-      thunkAPI.getState().formValidetion.value;
-    const { token, town } = params;
-
-    const data = await usersApi.patchUserMe(
-      age,
-      email,
-      name,
-      town,
-      gender,
-      token
-    );
-
+    const data: User = await usersApi.getUserMe(params);
     return data;
   }
 );
 
-export const fetchGetUserId = createAsyncThunk(
+export const fetchPatchUser = createAsyncThunk<
+  User,
+  UserPathParams,
+  {
+    state: {
+      formValidetion: {
+        value: FormValidetionValue;
+      };
+    };
+  }
+>("page/fetchPatchUser", async (params, thunkAPI) => {
+  const { age, email, name, gender } = thunkAPI.getState().formValidetion.value;
+  const { token, town } = params;
+
+  const data = await usersApi.patchUserMe(
+    age,
+    email,
+    name,
+    town,
+    gender,
+    token
+  );
+
+  return data;
+});
+
+export const fetchGetUserId = createAsyncThunk<User, Id>(
   "page/fetchGetUserId",
-  async (params, thunkAPI) => {
+  async (params) => {
     const data = await usersApi.getUserId(params.id);
     return data;
   }
