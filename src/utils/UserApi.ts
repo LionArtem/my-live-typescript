@@ -85,7 +85,7 @@ class UserApi {
     }).then(this._checkResponse);
   }
 
-  addAvatar(file: File, token: string) {
+  addAvatar(file: File, token: string): Promise<any> {
     return fetch(`${this.baseUrl}/add-file`, {
       method: "POST",
       headers: {
@@ -95,7 +95,7 @@ class UserApi {
     }).then(this._checkResponse);
   }
 
-  _checkResponse = (res) => {
+  _checkResponse = (res: Response) => {
     if (res.ok) {
       return res.json();
     }
