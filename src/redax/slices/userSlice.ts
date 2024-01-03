@@ -4,10 +4,6 @@ import { usersApi } from "../../utils/UserApi";
 import { notAuthRequest } from "../../utils/NotAuthRequest";
 import { FormValidetionValue } from "./formValidetionSlice";
 
-type Id = {
-  id: string;
-};
-
 type UserPathParams = {
   town: string;
   token: string;
@@ -23,6 +19,32 @@ export interface User {
   town: string;
   __v: number;
   _id: string;
+}
+
+interface UserFindIdProps {
+  arrIdUser: string[];
+  messages: Topic;
+}
+
+type Message = {
+  createdAt: string;
+  message: string;
+  quote: string;
+  userId: string;
+  _id: string;
+};
+
+interface Topic {
+  createdAt: string;
+  messages: Message[];
+  numberMessages: number;
+  title: string;
+  user: User;
+}
+
+interface UserFindIdData {
+  data: User[];
+  topic: Topic;
 }
 
 export const fetchGetUser = createAsyncThunk(
@@ -47,33 +69,33 @@ export const fetchPatchUser = createAsyncThunk<
   const { age, email, name, gender } = thunkAPI.getState().formValidetion.value;
   const { token, town } = params;
 
-  const data = await usersApi.patchUserMe(
+  const data = await usersApi.patchUserMe({
     age,
     email,
     name,
     town,
     gender,
-    token
-  );
+    token,
+  });
 
   return data;
 });
 
-export const fetchGetUserId = createAsyncThunk<User, Id>(
-  "page/fetchGetUserId",
-  async (params) => {
-    const data = await usersApi.getUserId(params.id);
-    return data;
-  }
-);
+// export const fetchGetUserId = createAsyncThunk<User, Id>(
+//   "page/fetchGetUserId",
+//   async (params) => {
+//     const data = await usersApi.getUserId(params.id);
+//     return data;
+//   }
+// );
 
-export const fetchGetUserFindId = createAsyncThunk(
-  "page/fetchGetUserFindId",
-  async (params, thunkAPI) => {
-    const data = await notAuthRequest.getUserFindId(params.arrIdUser);
-    return { data, topic: params.messages };
-  }
-);
+export const fetchGetUserFindId = createAsyncThunk<
+  UserFindIdData,
+  UserFindIdProps
+>("page/fetchGetUserFindId", async (params) => {
+  const data = await notAuthRequest.getUserFindId(params.arrIdUser);
+  return { data, topic: params.messages };
+});
 
 const initialState = {
   user: {},
@@ -152,13 +174,13 @@ const userSlice = createSlice({
     });
 
     // запрос на получение пользователя по id
-    builder.addCase(fetchGetUserId.pending, (state) => {
-      console.log("запрос на получение пользователя по id");
-    });
-    builder.addCase(fetchGetUserId.fulfilled, (state, { payload }) => {});
-    builder.addCase(fetchGetUserId.rejected, (state) => {
-      console.log("ошибка запроса получение пользователя по id");
-    });
+    // builder.addCase(fetchGetUserId.pending, (state) => {
+    //   console.log("запрос на получение пользователя по id");
+    // });
+    // builder.addCase(fetchGetUserId.fulfilled, (state, { payload }) => {});
+    // builder.addCase(fetchGetUserId.rejected, (state) => {
+    //   console.log("ошибка запроса получение пользователя по id");
+    // });
 
     // запрос на получение пользователя по массиву id
     builder.addCase(fetchGetUserFindId.pending, (state) => {

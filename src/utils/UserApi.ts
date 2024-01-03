@@ -6,7 +6,7 @@ type UserMeParams = {
   name: string;
   town: string;
   gender: string;
-  params: string;
+  token: string;
 };
 
 type Headers = {
@@ -27,7 +27,7 @@ class UserApi {
     this.headers = params.headers;
   }
 
-  getUsers(token: string, page: number) {
+  public getUsers(token: string, page: number) {
     return fetch(`${this.baseUrl}/ListUser/${page}`, {
       method: "GET",
       headers: {
@@ -37,7 +37,7 @@ class UserApi {
     }).then(this._checkResponse);
   }
 
-  deleteUsers(token: string, id: string) {
+  public deleteUsers(token: string, id: string) {
     return fetch(`${this.baseUrl}/delete/${id}`, {
       method: "DELETE",
       headers: {
@@ -47,7 +47,7 @@ class UserApi {
     }).then(this._checkResponse);
   }
 
-  deleteUsersAvatar(token: string, id: string) {
+  public deleteUsersAvatar(token: string, id: string) {
     return fetch(`${this.baseUrl}/delete-avatar/${id}`, {
       method: "PATCH",
       headers: {
@@ -57,7 +57,7 @@ class UserApi {
     }).then(this._checkResponse);
   }
 
-  getUserMe(token: string) {
+  public getUserMe(token: string) {
     return fetch(`${this.baseUrl}/me`, {
       method: "GET",
       headers: {
@@ -67,8 +67,8 @@ class UserApi {
     }).then(this._checkResponse);
   }
 
-  patchUserMe(params: UserMeParams) {
-    const token = params.params;
+  public patchUserMe(params: UserMeParams) {
+    const token = params.token;
     return fetch(`${this.baseUrl}/me`, {
       method: "PATCH",
       headers: {
@@ -85,7 +85,7 @@ class UserApi {
     }).then(this._checkResponse);
   }
 
-  addAvatar(file: File, token: string): Promise<any> {
+  public addAvatar(file: File, token: string): Promise<any> {
     return fetch(`${this.baseUrl}/add-file`, {
       method: "POST",
       headers: {
@@ -95,7 +95,7 @@ class UserApi {
     }).then(this._checkResponse);
   }
 
-  _checkResponse = (res: Response) => {
+  protected _checkResponse = (res: Response) => {
     if (res.ok) {
       return res.json();
     }
