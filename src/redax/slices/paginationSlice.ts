@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
-const initialState = {
+const initialState: { paginationNumber: number } = {
   paginationNumber: 1,
 };
 
@@ -8,7 +9,7 @@ const paginationSlice = createSlice({
   name: 'pagination',
   initialState,
   reducers: {
-    pointNumberPagination(state, action) {
+    pointNumberPagination(state, action: PayloadAction<number>) {
       state.paginationNumber = action.payload;
     },
     killPaginationState(state) {
@@ -17,7 +18,7 @@ const paginationSlice = createSlice({
   },
 });
 
-export const selectPagination = (state) => state.pagination;
+export const selectPagination = (state: RootState) => state.pagination;
 
 export const { pointNumberPagination, killPaginationState } =
   paginationSlice.actions;
