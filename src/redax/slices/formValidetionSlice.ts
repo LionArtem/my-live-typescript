@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 export type FormValidetionValue = {
@@ -8,16 +8,23 @@ export type FormValidetionValue = {
   name?: string;
 };
 
-type FormValidetionErr = {
-  age?: string;
-  email?: string;
-  gender?: string;
-  name?: string;
-};
+// type FormValidetionErr = {
+//   age?: string;
+//   email?: string;
+//   gender?: string;
+//   name?: string;
+// };
+
+interface ValueSet {
+  value: FormValidetionValue;
+  errors: FormValidetionValue;
+  valid: boolean;
+  name: string;
+}
 
 interface FormValidetion {
   value: FormValidetionValue;
-  errors: FormValidetionErr;
+  errors: FormValidetionValue;
   valid: boolean;
 }
 
@@ -36,7 +43,7 @@ const formValidetionSlice = createSlice({
       state.errors = {};
       state.valid = false;
     },
-    defaultValues(state, action) {
+    defaultValues(state, action: PayloadAction<FormValidetionValue>) {
       state.value = {
         name: action.payload.name,
         email: action.payload.email,
@@ -44,7 +51,7 @@ const formValidetionSlice = createSlice({
         gender: action.payload.gender,
       };
     },
-    setValue(state, action) {
+    setValue(state, action: PayloadAction<ValueSet>) {
       const { value, name, errors, valid } = action.payload;
       state.value = { ...state.value, [name]: value };
       state.errors = { ...state.errors, [name]: errors };
@@ -53,8 +60,8 @@ const formValidetionSlice = createSlice({
     resetValues(state) {
       state.value = {};
     },
-    setValid(state, { payload }) {
-      state.valid = payload;
+    setValid(state, action: PayloadAction<boolean>) {
+      state.valid = action.payload;
     },
   },
 });
