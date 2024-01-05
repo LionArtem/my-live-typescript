@@ -1,24 +1,34 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
 export type FormValidetionValue = {
-  age: number;
-  email: string;
-  gender: string;
-  name: string;
+  age?: number;
+  email?: string;
+  gender?: string;
+  name?: string;
+};
+
+type FormValidetionErr = {
+  age?: string;
+  email?: string;
+  gender?: string;
+  name?: string;
 };
 
 interface FormValidetion {
   value: FormValidetionValue;
+  errors: FormValidetionErr;
+  valid: boolean;
 }
 
-const initialState = {
+const initialState: FormValidetion = {
   value: {},
   errors: {},
   valid: false,
 };
 
 const formValidetionSlice = createSlice({
-  name: "formValidetion",
+  name: 'formValidetion',
   initialState,
   reducers: {
     killAllStateFormValidetion(state) {
@@ -49,7 +59,7 @@ const formValidetionSlice = createSlice({
   },
 });
 
-export const selectformValidetion = (state) => state.formValidetion;
+export const selectformValidetion = (state: RootState) => state.formValidetion;
 
 export const {
   setValue,
