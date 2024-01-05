@@ -1,8 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { usersApi } from "../../utils/UserApi";
-import { notAuthRequest } from "../../utils/NotAuthRequest";
-import { FormValidetionValue } from "./formValidetionSlice";
+import { usersApi } from '../../utils/UserApi';
+import { notAuthRequest } from '../../utils/NotAuthRequest';
+import { FormValidetionValue } from './formValidetionSlice';
 
 type UserPathParams = {
   town: string;
@@ -26,7 +26,7 @@ interface UserFindIdProps {
   messages: Topic;
 }
 
-type Message = {
+export type Message = {
   createdAt: string;
   message: string;
   quote: string;
@@ -48,7 +48,7 @@ interface UserFindIdData {
 }
 
 export const fetchGetUser = createAsyncThunk(
-  "page/fetchGetUser",
+  'page/fetchGetUser',
   async (params: string) => {
     const data: User = await usersApi.getUserMe(params);
     return data;
@@ -65,7 +65,7 @@ export const fetchPatchUser = createAsyncThunk<
       };
     };
   }
->("page/fetchPatchUser", async (params, thunkAPI) => {
+>('page/fetchPatchUser', async (params, thunkAPI) => {
   const { age, email, name, gender } = thunkAPI.getState().formValidetion.value;
   const { token, town } = params;
 
@@ -92,17 +92,17 @@ export const fetchPatchUser = createAsyncThunk<
 export const fetchGetUserFindId = createAsyncThunk<
   UserFindIdData,
   UserFindIdProps
->("page/fetchGetUserFindId", async (params) => {
+>('page/fetchGetUserFindId', async (params) => {
   const data = await notAuthRequest.getUserFindId(params.arrIdUser);
   return { data, topic: params.messages };
 });
 
 const initialState = {
   user: {},
-  admin: localStorage.getItem("admin"),
+  admin: localStorage.getItem('admin'),
   allMessagesAndAuthors: [],
   showPreloader: false,
-  textAnswerRequest: "",
+  textAnswerRequest: '',
   successRequest: false,
   showSceletonPage: false,
   errServer: false,
@@ -110,7 +110,7 @@ const initialState = {
 };
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     resetUserAvatar(state, action) {
@@ -126,7 +126,7 @@ const userSlice = createSlice({
       state.user = {};
       state.allMessagesAndAuthors = [];
       state.showPreloader = false;
-      state.textAnswerRequest = "";
+      state.textAnswerRequest = '';
       state.successRequest = false;
       state.showSceletonPage = false;
       state.errServer = false;
@@ -143,12 +143,12 @@ const userSlice = createSlice({
       // console.log(payload);
       state.user = payload;
       state.admin = payload.admin;
-      localStorage.setItem("userId", payload._id);
-      localStorage.setItem("admin", payload.admin);
+      localStorage.setItem('userId', payload._id);
+      localStorage.setItem('admin', payload.admin);
       state.showSceletonPage = false;
     });
     builder.addCase(fetchGetUser.rejected, (state, action) => {
-      console.log("ошибка запроса на получение пользователя");
+      console.log('ошибка запроса на получение пользователя');
       state.showSceletonPage = false;
       state.errServer = true;
       console.log(action);
@@ -161,13 +161,13 @@ const userSlice = createSlice({
     });
     builder.addCase(fetchPatchUser.fulfilled, (state, { payload }) => {
       state.user = payload;
-      localStorage.setItem("userId", payload._id);
+      localStorage.setItem('userId', payload._id);
       state.showPreloader = false;
-      state.textAnswerRequest = "изменения сохранены";
+      state.textAnswerRequest = 'изменения сохранены';
       state.successRequest = true;
     });
     builder.addCase(fetchPatchUser.rejected, (state, action) => {
-      console.log("ошибка запроса на редактирование пользователя");
+      console.log('ошибка запроса на редактирование пользователя');
       console.log(action);
       state.showPreloader = false;
       state.textAnswerRequest = action.error.message;
@@ -202,7 +202,7 @@ const userSlice = createSlice({
     });
     builder.addCase(fetchGetUserFindId.rejected, (state, action) => {
       console.log(action);
-      console.log("ошибка запроса получение пользователя по массиву id");
+      console.log('ошибка запроса получение пользователя по массиву id');
       state.errServerUserMessage = true;
     });
   },

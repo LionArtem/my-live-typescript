@@ -2,18 +2,36 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { topicApi } from '../../utils/TopicApi';
 import { notAuthRequest } from '../../utils/NotAuthRequest';
+import { Message } from './userSlice';
 
-export const fetchAddMessageInTopic = createAsyncThunk(
-  'page/fetchAddMessageInTopic',
-  async (params, thunkAPI) => {
-    const data = await topicApi.addMessageInTopic(params);
-    return data;
-  }
-);
+interface MessageTopicParams {
+  id: string;
+  message: string;
+  userId: string;
+  token: string;
+  quote: string;
+}
+
+interface MessageTopicData {
+  createdAt: string;
+  messages: Message[];
+  owner: string;
+  title: string;
+  __v: number;
+  _id: string;
+}
+
+export const fetchAddMessageInTopic = createAsyncThunk<
+  MessageTopicData,
+  MessageTopicParams
+>('page/fetchAddMessageInTopic', async (params) => {
+  const data = await topicApi.addMessageInTopic(params);
+  return data;
+});
 
 export const fetchDeleteMessage = createAsyncThunk(
   'page/fetchDeleteMessage',
-  async (params, thunkAPI) => {
+  async (params) => {
     const data = await topicApi.deleteMessage(params);
     return data;
   }
@@ -21,7 +39,7 @@ export const fetchDeleteMessage = createAsyncThunk(
 
 export const fetchGetMessagePaginetion = createAsyncThunk(
   'page/fetchGetMessagePaginetion',
-  async (params, thunkAPI) => {
+  async (params) => {
     const data = await notAuthRequest.getMessagePaginetion(params);
     return data;
   }
@@ -29,7 +47,7 @@ export const fetchGetMessagePaginetion = createAsyncThunk(
 
 export const fetchGetTopicPaginetion = createAsyncThunk(
   'page/fetchGetTopicPaginetion',
-  async (params, thunkAPI) => {
+  async (params) => {
     const data = await notAuthRequest.getTopicPaginetion(params.page);
     return data;
   }
@@ -37,7 +55,7 @@ export const fetchGetTopicPaginetion = createAsyncThunk(
 
 export const fetchAddTopic = createAsyncThunk(
   'page/fetchAddTopic',
-  async (params, thunkAPI) => {
+  async (params) => {
     const data = await topicApi.addNewTopic(params);
     return data;
   }
@@ -45,7 +63,7 @@ export const fetchAddTopic = createAsyncThunk(
 
 export const fetchDeleteTopic = createAsyncThunk(
   'page/fetchDeleteTopic',
-  async (params, thunkAPI) => {
+  async (params) => {
     const data = await topicApi.deleteTopic(params);
     return data;
   }
@@ -76,7 +94,7 @@ const topicsSlice = createSlice({
       state.messageValue = '';
       state.authorTopic = {};
       state.titleTopic = '';
-      state.topicsAll = [];
+      //state.topicsAll = [];
       state.numberPages = [];
       state.showPreloader = false;
       state.successRequest = false;
@@ -201,12 +219,12 @@ const topicsSlice = createSlice({
 
 export const selectTopics = (state) => state.topics;
 export const {
-  addAuthorTopic,
+  // addAuthorTopic,
   setMessageValue,
   killAllStateTopic,
   resetSuccessRequest,
   resetTextAnswerRequest,
-  addTextSuccess,
+  //addTextSuccess,
   isShowPreloaderMessage,
   changeErrGetMessage,
   addQuote,
