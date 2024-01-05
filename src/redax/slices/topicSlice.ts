@@ -21,6 +21,11 @@ interface MessageTopicData {
   _id: string;
 }
 
+type MessageDeleteParams = {
+  messageId: string;
+  topicId: string;
+};
+
 export const fetchAddMessageInTopic = createAsyncThunk<
   MessageTopicData,
   MessageTopicParams
@@ -29,13 +34,13 @@ export const fetchAddMessageInTopic = createAsyncThunk<
   return data;
 });
 
-export const fetchDeleteMessage = createAsyncThunk(
-  'page/fetchDeleteMessage',
-  async (params) => {
-    const data = await topicApi.deleteMessage(params);
-    return data;
-  }
-);
+export const fetchDeleteMessage = createAsyncThunk<
+  MessageTopicData,
+  MessageDeleteParams
+>('page/fetchDeleteMessage', async (params) => {
+  const data = await topicApi.deleteMessage(params);
+  return data;
+});
 
 export const fetchGetMessagePaginetion = createAsyncThunk(
   'page/fetchGetMessagePaginetion',
