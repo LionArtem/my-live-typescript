@@ -38,6 +38,20 @@ interface MessagePaginetionData {
   user: User;
 }
 
+type Topic = {
+  createdAt: string;
+  messages: Message[];
+  owner: string;
+  title: string;
+  __v: number;
+  _id: string;
+};
+
+interface TopicData {
+  numberTopics: number;
+  topic: Topic;
+}
+
 export const fetchAddMessageInTopic = createAsyncThunk<
   MessageTopicData,
   MessageTopicParams
@@ -62,13 +76,13 @@ export const fetchGetMessagePaginetion = createAsyncThunk<
   return data;
 });
 
-export const fetchGetTopicPaginetion = createAsyncThunk(
-  'page/fetchGetTopicPaginetion',
-  async (params) => {
-    const data = await notAuthRequest.getTopicPaginetion(params.page);
-    return data;
-  }
-);
+export const fetchGetTopicPaginetion = createAsyncThunk<
+  TopicData,
+  { page: number }
+>('page/fetchGetTopicPaginetion', async (params) => {
+  const data = await notAuthRequest.getTopicPaginetion(params.page);
+  return data;
+});
 
 export const fetchAddTopic = createAsyncThunk(
   'page/fetchAddTopic',
