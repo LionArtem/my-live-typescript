@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { topicApi } from '../../utils/TopicApi';
 import { notAuthRequest } from '../../utils/NotAuthRequest';
-import { Message } from './userSlice';
+import { Message, User } from './userSlice';
 
 interface MessageTopicParams {
   id: string;
@@ -25,6 +25,18 @@ type MessageDeleteParams = {
   messageId: string;
   topicId: string;
 };
+type MessagePaginetionParams = {
+  id: string;
+  page: number;
+};
+
+interface MessagePaginetionData {
+  createdAt: string;
+  messages: Message[];
+  numberMessages: number;
+  title: string;
+  user: User;
+}
 
 export const fetchAddMessageInTopic = createAsyncThunk<
   MessageTopicData,
@@ -42,13 +54,13 @@ export const fetchDeleteMessage = createAsyncThunk<
   return data;
 });
 
-export const fetchGetMessagePaginetion = createAsyncThunk(
-  'page/fetchGetMessagePaginetion',
-  async (params) => {
-    const data = await notAuthRequest.getMessagePaginetion(params);
-    return data;
-  }
-);
+export const fetchGetMessagePaginetion = createAsyncThunk<
+  MessagePaginetionData,
+  MessagePaginetionParams
+>('page/fetchGetMessagePaginetion', async (params) => {
+  const data = await notAuthRequest.getMessagePaginetion(params);
+  return data;
+});
 
 export const fetchGetTopicPaginetion = createAsyncThunk(
   'page/fetchGetTopicPaginetion',
