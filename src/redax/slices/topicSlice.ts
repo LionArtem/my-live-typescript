@@ -84,7 +84,7 @@ export const fetchGetTopicPaginetion = createAsyncThunk<
   return data;
 });
 
-export const fetchAddTopic = createAsyncThunk(
+export const fetchAddTopic = createAsyncThunk<Topic, { title: string }>(
   'page/fetchAddTopic',
   async (params) => {
     const data = await topicApi.addNewTopic(params);
@@ -92,7 +92,7 @@ export const fetchAddTopic = createAsyncThunk(
   }
 );
 
-export const fetchDeleteTopic = createAsyncThunk(
+export const fetchDeleteTopic = createAsyncThunk<Topic, { id: string }>(
   'page/fetchDeleteTopic',
   async (params) => {
     const data = await topicApi.deleteTopic(params);
