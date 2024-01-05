@@ -28,7 +28,7 @@ export default function MessageUser({ getMessages }) {
   const navigation = useNavigate();
   const dispatch = useDispatch();
   const { allMessagesAndAuthors, user } = useSelector(selectUser);
-  const { showPreloaderMessage } = useSelector(selectTopics);
+  const { preloaderMessage } = useSelector(selectTopics);
   const [messageId, isMessageId] = useState();
   const { statusModule } = useSelector(selectModuleConfirmation);
   const [modulePreloader, isModulePreloader] = useState(false);
@@ -71,7 +71,7 @@ export default function MessageUser({ getMessages }) {
 
   return (
     <>
-      {showPreloaderMessage ? (
+      {preloaderMessage ? (
         [...new Array(10)].map((_, i) => <MessageUserPreloader key={i} />)
       ) : allMessagesAndAuthors.length > 0 ? (
         allMessagesAndAuthors.map((obj) => (

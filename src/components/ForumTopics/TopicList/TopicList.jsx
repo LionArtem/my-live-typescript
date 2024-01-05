@@ -22,7 +22,7 @@ import {
 
 export default function TopicList({ getTopic, notTopics }) {
   const dispatch = useDispatch();
-  const { topicsInPage, showPreloaderTopic } = useSelector(selectTopics);
+  const { topicsInPage, preloaderTopic } = useSelector(selectTopics);
   const { user } = useSelector(selectUser);
   const { token } = useSelector(selectAuth);
   // const [moduleConfirmation, isModuleConfirmation] = useState(false);
@@ -58,7 +58,7 @@ export default function TopicList({ getTopic, notTopics }) {
 
   return (
     <div className={Style.conteiner}>
-      {showPreloaderTopic ? (
+      {preloaderTopic ? (
         <div className={Style.preloader_conteiner}>
           {[...new Array(10)].map((_, i) => (
             <TopicListPreloader key={i} />

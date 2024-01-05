@@ -34,10 +34,10 @@ export default function ForumTopics() {
 
   const { value, errors, valid } = useSelector(selectformValidetion);
   const {
-    showPreloader,
+    preloader,
     successRequest,
     textAnswerRequest,
-    srrTopicServer,
+    errTopicServer,
     numberPages,
   } = useSelector(selectTopics);
   const [showErrValidation, isShowErrValidation] = useState(false);
@@ -124,7 +124,7 @@ export default function ForumTopics() {
       ) : (
         ''
       )}
-      {srrTopicServer ? (
+      {errTopicServer ? (
         <ErrServer textErr="На сервере произошла ошибка, попробуйте зайти позже." />
       ) : (
         <>
@@ -149,7 +149,7 @@ export default function ForumTopics() {
               </div>
               <ButtonSubmit
                 valid={validButton}
-                showPreloader={showPreloader}
+                showPreloader={preloader}
                 successRequest={successRequest}
                 textAnswerRequest={textAnswerRequest}
                 text={'создать тему'}

@@ -108,13 +108,13 @@ const initialState = {
   titleTopic: '',
   topicsInPage: [],
   numberPages: [],
-  showPreloader: false,
-  showPreloaderTopic: false,
+  preloader: false,
+  preloaderTopic: false,
   successRequest: false,
   textAnswerRequest: '',
-  srrTopicServer: false,
+  errTopicServer: false,
   errGetMessage: false,
-  showPreloaderMessage: false,
+  preloaderMessage: false,
 };
 
 const topicsSlice = createSlice({
@@ -127,10 +127,10 @@ const topicsSlice = createSlice({
       state.titleTopic = '';
       //state.topicsAll = [];
       state.numberPages = [];
-      state.showPreloader = false;
+      state.preloader = false;
       state.successRequest = false;
-      state.showPreloaderTopic = false;
-      state.srrTopicServer = false;
+      state.preloaderTopic = false;
+      state.errTopicServer = false;
       state.errGetMessage = false;
       state.date = '';
       state.quote = '';
@@ -145,7 +145,7 @@ const topicsSlice = createSlice({
       state.textAnswerRequest = '';
     },
     isShowPreloaderMessage(state, action) {
-      state.showPreloaderMessage = action.payload;
+      state.preloaderMessage = action.payload;
     },
     resetSuccessRequest(state) {
       state.successRequest = false;
@@ -157,14 +157,14 @@ const topicsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchAddMessageInTopic.pending, (state) => {
       //console.log('отправка message');
-      state.showPreloader = true;
+      state.preloader = true;
     });
     builder.addCase(fetchAddMessageInTopic.fulfilled, (state, { payload }) => {
-      state.showPreloader = false;
+      state.preloader = false;
     });
     builder.addCase(fetchAddMessageInTopic.rejected, (state, action) => {
       console.log('ошибка отправки message');
-      state.showPreloader = false;
+      state.preloader = false;
       state.textAnswerRequest = 'при отправки сообщения произошла ошибка';
     });
 
@@ -205,31 +205,31 @@ const topicsSlice = createSlice({
 
     builder.addCase(fetchGetTopicPaginetion.pending, (state) => {
       //console.log('загрузка paginetion topics');
-      state.showPreloaderTopic = true;
+      state.preloaderTopic = true;
     });
     builder.addCase(fetchGetTopicPaginetion.fulfilled, (state, { payload }) => {
       state.topicsInPage = payload.topic;
       state.numberPages = [...new Array(Math.ceil(payload.numberTopics / 10))];
-      state.showPreloaderTopic = false;
+      state.preloaderTopic = false;
     });
     builder.addCase(fetchGetTopicPaginetion.rejected, (state, action) => {
       console.log('ошибка загрузки paginetion topic');
-      state.showPreloaderTopic = false;
-      state.srrTopicServer = true;
+      state.preloaderTopic = false;
+      state.errTopicServer = true;
     });
 
     builder.addCase(fetchAddTopic.pending, (state) => {
       //console.log('создание темы');
-      state.showPreloader = true;
+      state.preloader = true;
     });
     builder.addCase(fetchAddTopic.fulfilled, (state, { payload }) => {
       // console.log(payload);
-      state.showPreloader = false;
+      state.preloader = false;
       state.successRequest = true;
       state.textAnswerRequest = 'тема успешно создана';
     });
     builder.addCase(fetchAddTopic.rejected, (state, action) => {
-      state.showPreloader = false;
+      state.preloader = false;
       state.textAnswerRequest = 'при создании темы на сервере произошла ошибка';
       // console.log(action);
       console.log('ошибка создания темы');

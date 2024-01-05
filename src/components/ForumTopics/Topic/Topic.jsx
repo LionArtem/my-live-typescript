@@ -33,7 +33,7 @@ export default function Topic() {
     titleTopic,
     date,
     errGetMessage,
-    showPreloaderMessage,
+    preloaderMessage,
     numberPages,
   } = useSelector(selectTopics);
 
@@ -109,7 +109,7 @@ export default function Topic() {
       ) : (
         <>
           <div className={Style.info_topic}>
-            {showPreloaderMessage ? (
+            {preloaderMessage ? (
               <TopicPreloader />
             ) : (
               <>

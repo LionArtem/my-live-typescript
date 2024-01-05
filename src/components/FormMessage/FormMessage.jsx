@@ -28,7 +28,7 @@ export default function Form({ getMessages }) {
   const formRef = React.useRef();
   const { allMessagesAndAuthors } = useSelector(selectUser);
   const { value, errors, valid } = useSelector(selectformValidetion);
-  const { showPreloader, textAnswerRequest, quote } = useSelector(selectTopics);
+  const { preloader, textAnswerRequest, quote } = useSelector(selectTopics);
   const { token } = useSelector(selectAuth);
   const [errValidation, isErrValidation] = useState(false);
   const [quotePopap, isQuotePopap] = useState(false);
@@ -142,7 +142,7 @@ export default function Form({ getMessages }) {
             <TextInteractionForm text={errValidation && errors.textarea} />
             <ButtonSubmit
               valid={valid}
-              showPreloader={showPreloader}
+              showPreloader={preloader}
               textAnswerRequest={textAnswerRequest}
               text={'отправить'}
             />
