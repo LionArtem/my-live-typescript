@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { usersApi } from '../../utils/UserApi';
 import { notAuthRequest } from '../../utils/NotAuthRequest';
@@ -126,18 +126,20 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    resetUserAvatar(state, action) {
-      state.user = { ...state.user, avatar: action.payload };
+    resetUserAvatar(state, action: PayloadAction<string>) {
+      if (state.user) {
+        state.user = { ...state.user, avatar: action.payload };
+      }
     },
-    setSuccessRequest(state, action) {
+    setSuccessRequest(state, action: PayloadAction<boolean>) {
       state.successRequest = action.payload;
     },
-    addTextSuccess(state, action) {
+    addTextSuccess(state, action: PayloadAction<string>) {
       state.textAnswerRequest = action.payload;
     },
     killAllStateUser(state) {
-      state.user = {};
-      state.allMessagesAndAuthors = [];
+      state.user = null;
+      state.allMessagesAndAuthors = null;
       state.showPreloader = false;
       state.textAnswerRequest = '';
       state.successRequest = false;
