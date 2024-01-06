@@ -100,11 +100,28 @@ export const fetchDeleteTopic = createAsyncThunk<Topic, { id: string }>(
   }
 );
 
-const initialState = {
+interface TopicState {
+  date: string;
+  messageValue: string;
+  quote: string;
+  authorTopic: User | null;
+  titleTopic: string;
+  topicsInPage: Topic[];
+  numberPages: number[];
+  preloader: boolean;
+  preloaderTopic: boolean;
+  successRequest: boolean;
+  textAnswerRequest: string;
+  errTopicServer: boolean;
+  errGetMessage: boolean;
+  preloaderMessage: boolean;
+}
+
+const initialState: TopicState = {
   date: '',
   messageValue: '',
   quote: '',
-  authorTopic: {},
+  authorTopic: null,
   titleTopic: '',
   topicsInPage: [],
   numberPages: [],
