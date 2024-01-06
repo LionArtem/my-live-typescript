@@ -1,8 +1,9 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { topicApi } from '../../utils/TopicApi';
 import { notAuthRequest } from '../../utils/NotAuthRequest';
 import { Message, User } from './userSlice';
+import { RootState } from '../store';
 
 interface MessageTopicParams {
   id: string;
@@ -49,7 +50,7 @@ type Topic = {
 
 interface TopicData {
   numberTopics: number;
-  topic: Topic;
+  topic: Topic[];
 }
 
 export const fetchAddMessageInTopic = createAsyncThunk<
@@ -140,7 +141,7 @@ const topicsSlice = createSlice({
   reducers: {
     killAllStateTopic(state) {
       state.messageValue = '';
-      state.authorTopic = {};
+      state.authorTopic = null;
       state.titleTopic = '';
       //state.topicsAll = [];
       state.numberPages = [];
@@ -152,22 +153,22 @@ const topicsSlice = createSlice({
       state.date = '';
       state.quote = '';
     },
-    addQuote(state, action) {
+    addQuote(state, action: PayloadAction<string>) {
       state.quote = action.payload;
     },
-    changeErrGetMessage(state, action) {
+    changeErrGetMessage(state, action: PayloadAction<boolean>) {
       state.errGetMessage = action.payload;
     },
     resetTextAnswerRequest(state) {
       state.textAnswerRequest = '';
     },
-    isShowPreloaderMessage(state, action) {
+    isShowPreloaderMessage(state, action: PayloadAction<boolean>) {
       state.preloaderMessage = action.payload;
     },
     resetSuccessRequest(state) {
       state.successRequest = false;
     },
-    setMessageValue(state, action) {
+    setMessageValue(state, action: PayloadAction<string>) {
       state.messageValue = action.payload;
     },
   },
@@ -176,26 +177,26 @@ const topicsSlice = createSlice({
       //console.log('отправка message');
       state.preloader = true;
     });
-    builder.addCase(fetchAddMessageInTopic.fulfilled, (state, { payload }) => {
+    builder.addCase(fetchAddMessageInTopic.fulfilled, (state) => {
       state.preloader = false;
     });
-    builder.addCase(fetchAddMessageInTopic.rejected, (state, action) => {
+    builder.addCase(fetchAddMessageInTopic.rejected, (state) => {
       console.log('ошибка отправки message');
       state.preloader = false;
       state.textAnswerRequest = 'при отправки сообщения произошла ошибка';
     });
 
-    builder.addCase(fetchDeleteMessage.pending, (state) => {
+    builder.addCase(fetchDeleteMessage.pending, () => {
       console.log('удаление message');
     });
-    builder.addCase(fetchDeleteMessage.fulfilled, (state, { payload }) => {
+    builder.addCase(fetchDeleteMessage.fulfilled, () => {
       //console.log(payload);
     });
-    builder.addCase(fetchDeleteMessage.rejected, (state, action) => {
+    builder.addCase(fetchDeleteMessage.rejected, () => {
       console.log('ошибка удаления message');
     });
 
-    builder.addCase(fetchGetMessagePaginetion.pending, (state) => {
+    builder.addCase(fetchGetMessagePaginetion.pending, () => {
       //console.log('загрузка paginetion message');
     });
     builder.addCase(
@@ -215,7 +216,7 @@ const topicsSlice = createSlice({
         ];
       }
     );
-    builder.addCase(fetchGetMessagePaginetion.rejected, (state, action) => {
+    builder.addCase(fetchGetMessagePaginetion.rejected, (state) => {
       console.log('ошибка загрузки paginetion message');
       state.errGetMessage = true;
     });
@@ -229,7 +230,7 @@ const topicsSlice = createSlice({
       state.numberPages = [...new Array(Math.ceil(payload.numberTopics / 10))];
       state.preloaderTopic = false;
     });
-    builder.addCase(fetchGetTopicPaginetion.rejected, (state, action) => {
+    builder.addCase(fetchGetTopicPaginetion.rejected, (state) => {
       console.log('ошибка загрузки paginetion topic');
       state.preloaderTopic = false;
       state.errTopicServer = true;
@@ -239,33 +240,33 @@ const topicsSlice = createSlice({
       //console.log('создание темы');
       state.preloader = true;
     });
-    builder.addCase(fetchAddTopic.fulfilled, (state, { payload }) => {
+    builder.addCase(fetchAddTopic.fulfilled, (state) => {
       // console.log(payload);
       state.preloader = false;
       state.successRequest = true;
       state.textAnswerRequest = 'тема успешно создана';
     });
-    builder.addCase(fetchAddTopic.rejected, (state, action) => {
+    builder.addCase(fetchAddTopic.rejected, (state) => {
       state.preloader = false;
       state.textAnswerRequest = 'при создании темы на сервере произошла ошибка';
       // console.log(action);
       console.log('ошибка создания темы');
     });
 
-    builder.addCase(fetchDeleteTopic.pending, (state) => {
+    builder.addCase(fetchDeleteTopic.pending, () => {
       //console.log('удаление темы');
     });
-    builder.addCase(fetchDeleteTopic.fulfilled, (state, { payload }) => {
+    builder.addCase(fetchDeleteTopic.fulfilled, () => {
       //console.log(payload);
     });
-    builder.addCase(fetchDeleteTopic.rejected, (state, action) => {
+    builder.addCase(fetchDeleteTopic.rejected, () => {
       // console.log(action);
       //console.log('ошибка удаления темы');
     });
   },
 });
 
-export const selectTopics = (state) => state.topics;
+export const selectTopics = (state: RootState) => state.topics;
 export const {
   // addAuthorTopic,
   setMessageValue,
