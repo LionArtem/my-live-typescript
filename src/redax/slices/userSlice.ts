@@ -69,16 +69,17 @@ export const fetchPatchUser = createAsyncThunk<
   const { age, email, name, gender } = thunkAPI.getState().formValidetion.value;
   const { token, town } = params;
 
-  const data = await usersApi.patchUserMe({
-    age,
-    email,
-    name,
-    town,
-    gender,
-    token,
-  });
-
-  return data;
+  if (age && email && name && gender) {
+    const data = await usersApi.patchUserMe({
+      age,
+      email,
+      name,
+      town,
+      gender,
+      token,
+    });
+    return data;
+  }
 });
 
 // export const fetchGetUserId = createAsyncThunk<User, Id>(
@@ -97,10 +98,22 @@ export const fetchGetUserFindId = createAsyncThunk<
   return { data, topic: params.messages };
 });
 
-const initialState = {
-  user: {},
+interface UserState {
+  user: User | null;
+  admin: string | null;
+  allMessagesAndAuthors: UserFindIdData | null;
+  showPreloader: boolean;
+  textAnswerRequest: string;
+  successRequest: boolean;
+  showSceletonPage: boolean;
+  errServer: boolean;
+  errServerUserMessage: boolean;
+}
+
+const initialState: UserState = {
+  user: null,
   admin: localStorage.getItem('admin'),
-  allMessagesAndAuthors: [],
+  allMessagesAndAuthors: null,
   showPreloader: false,
   textAnswerRequest: '',
   successRequest: false,
