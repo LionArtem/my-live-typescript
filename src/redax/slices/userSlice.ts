@@ -3,6 +3,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { usersApi } from '../../utils/UserApi';
 import { notAuthRequest } from '../../utils/NotAuthRequest';
 import { FormValidetionValue } from './formValidetionSlice';
+import { RootState } from '../store';
 
 type UserPathParams = {
   town: string;
@@ -101,13 +102,18 @@ export const fetchGetUserFindId = createAsyncThunk<
 interface UserState {
   user: User | null;
   admin: boolean | null;
-  allMessagesAndAuthors: UserFindIdData | null;
+  allMessagesAndAuthors: MessagesAndAuthor[] | null;
   showPreloader: boolean;
   textAnswerRequest: string;
   successRequest: boolean;
   showSceletonPage: boolean;
   errServer: boolean;
   errServerUserMessage: boolean;
+}
+
+interface MessagesAndAuthor {
+  messages: Message;
+  user: User | undefined;
 }
 
 const initialState: UserState = {
@@ -166,8 +172,10 @@ const userSlice = createSlice({
       console.log('ошибка запроса на получение пользователя');
       state.showSceletonPage = false;
       state.errServer = true;
-      console.log(action);
-      state.textAnswerRequest = action.error.message;
+      //console.log(action);
+      if (action.error.message) {
+        state.textAnswerRequest = action.error.message;
+      }
     });
     // запрос на редактирование пользователя
     builder.addCase(fetchPatchUser.pending, (state) => {
@@ -185,7 +193,9 @@ const userSlice = createSlice({
       console.log('ошибка запроса на редактирование пользователя');
       console.log(action);
       state.showPreloader = false;
-      state.textAnswerRequest = action.error.message;
+      if (action.error.message) {
+        state.textAnswerRequest = action.error.message;
+      }
     });
 
     // запрос на получение пользователя по id
@@ -223,13 +233,13 @@ const userSlice = createSlice({
   },
 });
 
-export const selectUser = (state) => state.user;
+export const selectUser = (state: RootState) => state.user;
 
 export const {
   killAllStateUser,
   addTextSuccess,
   setSuccessRequest,
-  addUser,
+  //addUser,
   resetUserAvatar,
 } = userSlice.actions;
 export default userSlice.reducer;
