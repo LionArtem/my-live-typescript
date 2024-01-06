@@ -47,10 +47,10 @@ interface UserFindIdData {
   topic: Topic;
 }
 
-export const fetchGetUser = createAsyncThunk(
+export const fetchGetUser = createAsyncThunk<User, { token: string }>(
   'page/fetchGetUser',
-  async (params: string) => {
-    const data: User = await usersApi.getUserMe(params);
+  async (params) => {
+    const data = await usersApi.getUserMe(params);
     return data;
   }
 );
@@ -100,7 +100,7 @@ export const fetchGetUserFindId = createAsyncThunk<
 
 interface UserState {
   user: User | null;
-  admin: string | null;
+  admin: boolean | null;
   allMessagesAndAuthors: UserFindIdData | null;
   showPreloader: boolean;
   textAnswerRequest: string;
@@ -112,7 +112,7 @@ interface UserState {
 
 const initialState: UserState = {
   user: null,
-  admin: localStorage.getItem('admin'),
+  admin: Boolean(localStorage.getItem('admin')),
   allMessagesAndAuthors: null,
   showPreloader: false,
   textAnswerRequest: '',
@@ -159,7 +159,7 @@ const userSlice = createSlice({
       state.user = payload;
       state.admin = payload.admin;
       localStorage.setItem('userId', payload._id);
-      localStorage.setItem('admin', payload.admin);
+      localStorage.setItem('admin', String(payload.admin));
       state.showSceletonPage = false;
     });
     builder.addCase(fetchGetUser.rejected, (state, action) => {

@@ -1,4 +1,4 @@
-import { URL_SERVER } from "./Constants";
+import { URL_SERVER } from './Constants';
 
 type UserMeParams = {
   age: number;
@@ -11,7 +11,7 @@ type UserMeParams = {
 
 type Headers = {
   authorization: string;
-  "content-type": string;
+  'content-type': string;
 };
 
 interface UserApiParams {
@@ -29,40 +29,40 @@ class UserApi {
 
   public getUsers(token: string, page: number) {
     return fetch(`${this.baseUrl}/ListUser/${page}`, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token") || token}`,
-        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem('token') || token}`,
+        'content-type': 'application/json',
       },
     }).then(this._checkResponse);
   }
 
   public deleteUsers(token: string, id: string) {
     return fetch(`${this.baseUrl}/delete/${id}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token") || token}`,
-        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem('token') || token}`,
+        'content-type': 'application/json',
       },
     }).then(this._checkResponse);
   }
 
   public deleteUsersAvatar(token: string, id: string) {
     return fetch(`${this.baseUrl}/delete-avatar/${id}`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token") || token}`,
-        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem('token') || token}`,
+        'content-type': 'application/json',
       },
     }).then(this._checkResponse);
   }
 
-  public getUserMe(token: string) {
+  public getUserMe({ token }: { token: string }) {
     return fetch(`${this.baseUrl}/me`, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token") || token}`,
-        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem('token') || token}`,
+        'content-type': 'application/json',
       },
     }).then(this._checkResponse);
   }
@@ -70,10 +70,10 @@ class UserApi {
   public patchUserMe(params: UserMeParams) {
     const token = params.token;
     return fetch(`${this.baseUrl}/me`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token") || token}`,
-        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem('token') || token}`,
+        'content-type': 'application/json',
       },
       body: JSON.stringify({
         age: params.age,
@@ -87,9 +87,9 @@ class UserApi {
 
   public addAvatar(file: File, token: string): Promise<any> {
     return fetch(`${this.baseUrl}/add-file`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token") || token}`,
+        authorization: `Bearer ${localStorage.getItem('token') || token}`,
       },
       body: file,
     }).then(this._checkResponse);
@@ -106,8 +106,8 @@ class UserApi {
 const usersApi = new UserApi({
   baseUrl: `${URL_SERVER}/users`,
   headers: {
-    authorization: `Bearer ${localStorage.getItem("token")}`,
-    "content-type": "application/json",
+    authorization: `Bearer ${localStorage.getItem('token')}`,
+    'content-type': 'application/json',
   },
 });
 
