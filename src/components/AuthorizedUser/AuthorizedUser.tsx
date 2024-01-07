@@ -19,7 +19,7 @@ export default function AuthorizedUser() {
       <Link className={Style.button_open} to={'/my-page'}>
         Моя страница
       </Link>
-      {user.admin && (
+      {user?.admin && (
         <Link to={'/admin'} className={Style.button_open}>
           Панель администратора
         </Link>

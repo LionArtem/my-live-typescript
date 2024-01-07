@@ -11,8 +11,6 @@ import Style from './Authorization.module.scss';
 import FormAuth from '../FormAuth/FormAuth';
 
 export default function Authorization() {
-
-  
   const dispatch = useDispatch();
   const { fopmReg, fopmSign } = useSelector(selectAuth);
   return (
