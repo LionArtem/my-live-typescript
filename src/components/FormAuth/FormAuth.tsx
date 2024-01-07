@@ -47,7 +47,7 @@ export default function FormAuth({ textButton, text }: FormAuthProps) {
     });
   };
 
-  const checkEmptyField = (value, name, text) => {
+  const checkEmptyField = (value: string, name: string, text: string) => {
     if (value) {
       dispatch(
         setValue({

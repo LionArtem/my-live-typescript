@@ -16,9 +16,9 @@ export type FormValidetionValue = {
 // };
 
 interface ValueSet {
-  value: FormValidetionValue;
-  errors: FormValidetionValue;
-  valid: boolean;
+  value?: FormValidetionValue;
+  errors: String;
+  valid?: boolean;
   name: string;
 }
 
@@ -55,7 +55,7 @@ const formValidetionSlice = createSlice({
       const { value, name, errors, valid } = action.payload;
       state.value = { ...state.value, [name]: value };
       state.errors = { ...state.errors, [name]: errors };
-      state.valid = valid;
+      state.valid = valid ? valid : false;
     },
     resetValues(state) {
       state.value = {};
