@@ -47,7 +47,7 @@ export default function FormAuth({ textButton, text }: FormAuthProps) {
     });
   };
 
-  const checkEmptyField = (value: string, name: string, text: string) => {
+  const checkEmptyField = (value: boolean, name: string, text: string) => {
     if (value) {
       dispatch(
         setValue({
@@ -58,24 +58,24 @@ export default function FormAuth({ textButton, text }: FormAuthProps) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     checkEmptyField(!value.email, 'email', 'Заполните это поле');
     checkEmptyField(!value.password, 'password', 'Заполните это поле');
-    e.preventDefault();
+    evt.preventDefault();
     if (!valid) {
       isFocusInputEmail(true);
       isFocusInputPassword(true);
       return;
     }
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+    const email: string = (evt.target as HTMLFormElement).email.value;
+    const password: string = (evt.target as HTMLFormElement).password.value;
 
     if (fopmReg) {
       dispatch(fetchAddUser({ email, password })).then((res) => {
         if (res.meta.requestStatus === 'fulfilled') {
           loginUser(email, password);
         } else {
-          dispatch(setValid());
+          dispatch(setValid(false));
         }
       });
     } else {
@@ -102,7 +102,11 @@ export default function FormAuth({ textButton, text }: FormAuthProps) {
 
   return (
     <ModulContainer clickOverly={() => closeForm()}>
-      <form noValidate onSubmit={(e) => handleSubmit(e)} className={Style.form}>
+      <form
+        noValidate
+        onSubmit={(evt) => handleSubmit(evt)}
+        className={Style.form}
+      >
         <div
           onClick={() => {
             closeForm();

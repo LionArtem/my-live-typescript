@@ -6,6 +6,7 @@ export type FormValidetionValue = {
   email?: string;
   gender?: string;
   name?: string;
+  password?: string;
 };
 
 // type FormValidetionErr = {
