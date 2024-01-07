@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   fetchAddUser,
   fetchLoginUser,
@@ -20,9 +20,15 @@ import Style from './FormAuth.module.scss';
 import TextInteractionForm from '../TextInteractionForm/TextInteractionForm';
 import ButtonSubmit from '../Buttons/ButtonSubmit/ButtonSubmit';
 import ModulContainer from '../Moduls/ModulContainer/ModulContainer';
+import { useAppDispatch } from '../../redax/store';
 
-export default function FormAuth({ textButton, text }) {
-  const dispatch = useDispatch();
+type FormAuthProps = {
+  textButton: string;
+  text: string;
+};
+
+export default function FormAuth({ textButton, text }: FormAuthProps) {
+  const dispatch = useAppDispatch();
   const { value, errors, valid } = useSelector(selectformValidetion);
   const { showPreloader, textArrAnswerServer, fopmReg } =
     useSelector(selectAuth);
@@ -30,13 +36,13 @@ export default function FormAuth({ textButton, text }) {
   const [focusInputEmail, isFocusInputEmail] = useState(false);
   const [focusInputPassword, isFocusInputPassword] = useState(false);
 
-  const loginUser = (email, password) => {
+  const loginUser = (email: string, password: string): void => {
     dispatch(fetchLoginUser({ email, password })).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         dispatch(resetForm());
         dispatch(killAllStateFormValidetion());
       } else {
-        dispatch(setValid());
+        dispatch(setValid(false));
       }
     });
   };
