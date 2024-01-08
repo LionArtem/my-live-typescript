@@ -8,6 +8,7 @@ export type FormValidetionValue = {
   name?: string;
   password?: string;
   textarea?: string;
+  topic?: string;
 };
 
 // type FormValidetionErr = {

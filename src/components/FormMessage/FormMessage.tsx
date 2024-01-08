@@ -87,7 +87,7 @@ export default function FormFormMessage({
         deleteTextAnswerServer();
       });
     } else {
-      dispatch(setTextAnswerRequest());
+      dispatch(setTextAnswerRequest('при отправки сообщения произошла ошибка'));
       deleteTextAnswerServer();
     }
   };

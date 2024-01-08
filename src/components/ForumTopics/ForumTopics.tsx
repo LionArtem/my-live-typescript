@@ -11,6 +11,7 @@ import {
   selectTopics,
   resetSuccessRequest,
   resetTextAnswerRequest,
+  setTextAnswerRequest,
 } from '../../redax/slices/topicSlice';
 import {
   selectformValidetion,
@@ -45,41 +46,50 @@ export default function ForumTopics() {
   const [validButton, isValidButton] = useState(false);
   const [notTopics, isNotTopics] = useState(false);
 
-  const getTopic = (page = localStorage.getItem('page') ?? 1) => {
+  const getTopic = (page = Number(localStorage.getItem('page')) ?? 1): void => {
     dispatch(fetchGetTopicPaginetion({ page })).then(() => isNotTopics(true));
   };
 
-  const addPost = (evt) => {
-    evt.preventDefault();
-    if (value.topic.length < 2 || value.topic.length > 30) {
-      dispatch(setValid(false));
-      isValidButton(false);
-      isShowErrValidation(true);
-      dispatch(
-        setValue({
-          name: 'topic',
-          errors:
-            'Название темы не должно содержать менее 2 символов и более 30',
-        })
-      );
-      return;
-    }
-    if (!valid) {
-      isShowErrValidation(true);
-      isValidButton(false);
-      inputRef.current?.focus();
-      return;
-    }
+  const deleteTextErr = () => {
+    setTimeout(() => dispatch(resetTextAnswerRequest()), 1500);
+  };
 
-    dispatch(fetchAddTopic(value.topic)).then((res) => {
-      if (res.meta.requestStatus === 'fulfilled') {
-        setTimeout(() => dispatch(resetSuccessRequest()), 1500);
-        getTopic();
+  const addPost = (evt: React.FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    if (value.topic) {
+      if (value.topic.length < 2 || value.topic.length > 30) {
+        dispatch(setValid(false));
         isValidButton(false);
+        isShowErrValidation(true);
+        dispatch(
+          setValue({
+            name: 'topic',
+            errors:
+              'Название темы не должно содержать менее 2 символов и более 30',
+          })
+        );
+        return;
       }
-      setTimeout(() => dispatch(resetTextAnswerRequest()), 1500);
-      dispatch(resetValues());
-    });
+      if (!valid) {
+        isShowErrValidation(true);
+        isValidButton(false);
+        inputRef.current?.focus();
+        return;
+      }
+
+      dispatch(fetchAddTopic({ title: value.topic })).then((res) => {
+        if (res.meta.requestStatus === 'fulfilled') {
+          setTimeout(() => dispatch(resetSuccessRequest()), 1500);
+          getTopic();
+          isValidButton(false);
+        }
+        deleteTextErr();
+        dispatch(resetValues());
+      });
+    } else {
+      dispatch(setTextAnswerRequest('при создании темы произошла ошибка'));
+      deleteTextErr();
+    }
   };
 
   React.useEffect(() => {
