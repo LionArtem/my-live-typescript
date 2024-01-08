@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Style from './ForumTopics.module.scss';
 
@@ -27,10 +27,11 @@ import ButtonSubmit from '../Buttons/ButtonSubmit/ButtonSubmit';
 import TextInteractionForm from '../TextInteractionForm/TextInteractionForm';
 import ErrServer from '../ErrServer/ErrServer';
 import NavigationNotAuthUser from '../NavigationNotAuthUser/NavigationNotAuthUser';
+import { useAppDispatch } from '../../redax/store';
 
 export default function ForumTopics() {
-  const dispatch = useDispatch();
-  const inputRef = useRef();
+  const dispatch = useAppDispatch();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const { value, errors, valid } = useSelector(selectformValidetion);
   const {
@@ -66,7 +67,7 @@ export default function ForumTopics() {
     if (!valid) {
       isShowErrValidation(true);
       isValidButton(false);
-      inputRef.current.focus();
+      inputRef.current?.focus();
       return;
     }
 
