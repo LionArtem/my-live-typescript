@@ -54,20 +54,35 @@ export default function ForumTopics() {
     setTimeout(() => dispatch(resetTextAnswerRequest()), 1500);
   };
 
+  const showMistakeNumberCharacters = (): void => {
+    dispatch(setValid(false));
+    isValidButton(false);
+    isShowErrValidation(true);
+    dispatch(
+      setValue({
+        name: 'topic',
+        errors: 'Название темы не должно содержать менее 2 символов и более 30',
+      })
+    );
+  };
+
+  const createTopic = (text: string): void => {
+    dispatch(fetchAddTopic({ title: text })).then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        setTimeout(() => dispatch(resetSuccessRequest()), 1500);
+        getTopic();
+        isValidButton(false);
+      }
+      deleteTextErr();
+      dispatch(resetValues());
+    });
+  };
+
   const addPost = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (value.topic) {
       if (value.topic.length < 2 || value.topic.length > 30) {
-        dispatch(setValid(false));
-        isValidButton(false);
-        isShowErrValidation(true);
-        dispatch(
-          setValue({
-            name: 'topic',
-            errors:
-              'Название темы не должно содержать менее 2 символов и более 30',
-          })
-        );
+        showMistakeNumberCharacters();
         return;
       }
       if (!valid) {
@@ -76,16 +91,7 @@ export default function ForumTopics() {
         inputRef.current?.focus();
         return;
       }
-
-      dispatch(fetchAddTopic({ title: value.topic })).then((res) => {
-        if (res.meta.requestStatus === 'fulfilled') {
-          setTimeout(() => dispatch(resetSuccessRequest()), 1500);
-          getTopic();
-          isValidButton(false);
-        }
-        deleteTextErr();
-        dispatch(resetValues());
-      });
+      createTopic(value.topic);
     } else {
       dispatch(setTextAnswerRequest('при создании темы произошла ошибка'));
       deleteTextErr();
@@ -104,13 +110,7 @@ export default function ForumTopics() {
     };
   }, []);
 
-  function checkedStringGap(string) {
-    const regex = /^((?!\s{2}).)*$/;
-    const result = regex.test(string);
-    return result;
-  }
-
-  const changeValue = (evt) => {
+  const changeValue = (evt: React.ChangeEvent<HTMLInputElement>) => {
     isShowErrValidation(false);
     isValidButton(true);
     let errMessage = evt.target.validationMessage;
@@ -123,10 +123,16 @@ export default function ForumTopics() {
         value: evt.target.value,
         name: evt.target.name,
         errors: errMessage,
-        valid: evt.target.closest('form').checkValidity(),
+        valid: evt.target.closest('form')?.checkValidity(),
       })
     );
   };
+
+  function checkedStringGap(string: string): boolean {
+    const regex = /^((?!\s{2}).)*$/;
+    const result = regex.test(string);
+    return result;
+  }
 
   return (
     <div className={Style.conteiner}>

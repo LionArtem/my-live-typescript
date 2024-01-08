@@ -6,7 +6,7 @@ export default function ButtonsNavigation({
   page,
   text,
 }: {
-  page: number;
+  page: string;
   text: string;
 }) {
   const navigate = useNavigate();
