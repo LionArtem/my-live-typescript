@@ -1,7 +1,7 @@
-import React from 'react';
-import Style from './TextInteractionForm.module.scss';
+import React from "react";
+import Style from "./TextInteractionForm.module.scss";
 
-export default function TextInteractionForm({ text, request }) {
+export default function TextInteractionForm({ text, request = false }) {
   return (
     <span className={`${Style.error} ${request && Style.success} `}>
       {text}

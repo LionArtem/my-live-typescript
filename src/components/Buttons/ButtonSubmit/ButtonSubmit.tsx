@@ -1,12 +1,12 @@
-import React from 'react';
-import Style from './ButtonSubmit.module.scss';
-import PreloaderPoint from '../../Preloaders/PreloaderPoint/PreloaderPoint';
-import TextInteractionForm from '../../TextInteractionForm/TextInteractionForm';
+
+import Style from "./ButtonSubmit.module.scss";
+import PreloaderPoint from "../../Preloaders/PreloaderPoint/PreloaderPoint";
+import TextInteractionForm from "../../TextInteractionForm/TextInteractionForm";
 
 type BottonSubmitProps = {
   valid: boolean;
   showPreloader: boolean;
-  successRequest: boolean;
+  successRequest?: boolean;
   textAnswerRequest: string;
   text: string;
 };

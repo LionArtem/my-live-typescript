@@ -47,7 +47,11 @@ export default function FormAuth({ textButton, text }: FormAuthProps) {
     });
   };
 
-  const checkEmptyField = (value: boolean, name: string, text: string) => {
+  const checkEmptyField = (
+    value: boolean,
+    name: string,
+    text: string
+  ): void => {
     if (value) {
       dispatch(
         setValue({
@@ -58,7 +62,7 @@ export default function FormAuth({ textButton, text }: FormAuthProps) {
     }
   };
 
-  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>): void => {
     checkEmptyField(!value.email, "email", "Заполните это поле");
     checkEmptyField(!value.password, "password", "Заполните это поле");
     evt.preventDefault();
@@ -83,7 +87,9 @@ export default function FormAuth({ textButton, text }: FormAuthProps) {
     }
   };
 
-  const collectValidetion = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const collectValidetion = (
+    evt: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     textArrAnswerServer.length > 0 && dispatch(resetTextArrAnswerServer());
     dispatch(
       setValue({
@@ -95,7 +101,7 @@ export default function FormAuth({ textButton, text }: FormAuthProps) {
     );
   };
 
-  const closeForm = () => {
+  const closeForm = (): void => {
     dispatch(resetForm());
     dispatch(killAllStateFormValidetion());
   };
@@ -127,7 +133,7 @@ export default function FormAuth({ textButton, text }: FormAuthProps) {
           placeholder="email"
           required
         ></input>
-        <TextInteractionForm text={focusInputEmail && errors.email} />
+        <TextInteractionForm text={focusInputEmail && errors.email}  />
         <input
           onBlur={() => isFocusInputPassword(true)}
           onFocus={() => isFocusInputPassword(false)}
