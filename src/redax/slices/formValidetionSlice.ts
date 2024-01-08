@@ -17,7 +17,7 @@ export type FormValidetionValue = {
 // };
 
 interface ValueSet {
-  value?: FormValidetionValue;
+  value?: string;
   errors: String;
   valid?: boolean;
   name: string;
