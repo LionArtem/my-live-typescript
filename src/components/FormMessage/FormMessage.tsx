@@ -1,28 +1,28 @@
-import React, { useState } from "react";
-import Style from "./FormMessage.module.scss";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from 'react';
+import Style from './FormMessage.module.scss';
+import { useSelector } from 'react-redux';
 import {
   fetchAddMessageInTopic,
   selectTopics,
   resetTextAnswerRequest,
   setTextAnswerRequest,
   addQuote,
-} from "../../redax/slices/topicSlice";
+} from '../../redax/slices/topicSlice';
 
-import { selectUser } from "../../redax/slices/userSlice";
+import { selectUser } from '../../redax/slices/userSlice';
 
 import {
   setValue,
   selectformValidetion,
   resetValues,
   setValid,
-} from "../../redax/slices/formValidetionSlice";
+} from '../../redax/slices/formValidetionSlice';
 
-import ButtonSubmit from "../Buttons/ButtonSubmit/ButtonSubmit";
-import TextInteractionForm from "../TextInteractionForm/TextInteractionForm";
-import { selectAuth } from "../../redax/slices/authSlice";
-import ModuleQuote from "../Moduls/ModuleQuote/ModuleQuote";
-import { useAppDispatch } from "../../redax/store";
+import ButtonSubmit from '../Buttons/ButtonSubmit/ButtonSubmit';
+import TextInteractionForm from '../TextInteractionForm/TextInteractionForm';
+import { selectAuth } from '../../redax/slices/authSlice';
+import ModuleQuote from '../Moduls/ModuleQuote/ModuleQuote';
+import { useAppDispatch } from '../../redax/store';
 
 export default function FormFormMessage({
   getMessages,
@@ -57,16 +57,16 @@ export default function FormFormMessage({
   const scrollForm = (): void => {
     if (formRef.current) {
       formRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "start",
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'start',
       });
     }
   };
 
   const addMessage = (): void => {
-    const id = localStorage.getItem("topicId");
-    const userId = localStorage.getItem("userId");
+    const id = localStorage.getItem('topicId');
+    const userId = localStorage.getItem('userId');
     if (id && userId && token) {
       dispatch(
         fetchAddMessageInTopic({
@@ -77,12 +77,12 @@ export default function FormFormMessage({
           token,
         })
       ).then((res) => {
-        if (res.meta.requestStatus === "fulfilled") {
+        if (res.meta.requestStatus === 'fulfilled') {
           getMessages();
           dispatch(resetValues());
           dispatch(setValid(false));
           setTimeout(scrollForm, 500);
-          dispatch(addQuote(""));
+          dispatch(addQuote(''));
         }
         deleteTextAnswerServer();
       });
@@ -100,7 +100,7 @@ export default function FormFormMessage({
     if (result) {
       return { checkValid: true };
     } else {
-      return { checkValid: false, taxtErr: "ввидите минимум один символ" };
+      return { checkValid: false, taxtErr: 'ввидите минимум один символ' };
     }
   };
 
@@ -109,7 +109,7 @@ export default function FormFormMessage({
       setValue({
         value: evt.target.value,
         name: evt.target.name,
-        errors: validetionTextarea(evt).taxtErr ?? "",
+        errors: validetionTextarea(evt).taxtErr ?? '',
         valid: validetionTextarea(evt).checkValid,
       })
     );
@@ -117,8 +117,8 @@ export default function FormFormMessage({
 
   return (
     <>
-      {allMessagesAndAuthors.length >= 10 ? (
-        ""
+      {allMessagesAndAuthors && allMessagesAndAuthors.length >= 10 ? (
+        ''
       ) : (
         <>
           <div className={Style.containerQuote}>
@@ -130,7 +130,7 @@ export default function FormFormMessage({
                   onClick={() => isQuotePopap(true)}
                 >{` ${quote}`}</span>
                 <div
-                  onClick={() => dispatch(addQuote(""))}
+                  onClick={() => dispatch(addQuote(''))}
                   className={Style.containerQuote_delete}
                 ></div>
               </>
@@ -144,12 +144,11 @@ export default function FormFormMessage({
           >
             <textarea
               ref={messageRef}
-              value={value.textarea ?? ""}
+              value={value.textarea ?? ''}
               onChange={(evt) => {
                 changeValue(evt);
               }}
               className={Style.textarea}
-              type="text"
               name="textarea"
               required
               maxLength={500}
@@ -159,7 +158,7 @@ export default function FormFormMessage({
               valid={valid}
               showPreloader={preloader}
               textAnswerRequest={textAnswerRequest}
-              text={"отправить"}
+              text={'отправить'}
             />
           </form>
         </>
