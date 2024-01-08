@@ -57,7 +57,9 @@ export default function Topic() {
     // return result;
   };
 
-  const getMessages = (page = localStorage.getItem("page") ?? 1) => {
+  const getMessages = (
+    page = Number(localStorage.getItem("page")) ?? 1
+  ): void => {
     dispatch(isShowPreloaderMessage(true));
     dispatch(
       fetchGetMessagePaginetion({
