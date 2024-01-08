@@ -5,6 +5,7 @@ import {
   fetchAddMessageInTopic,
   selectTopics,
   resetTextAnswerRequest,
+  setTextAnswerRequest,
   addQuote,
 } from "../../redax/slices/topicSlice";
 
@@ -85,10 +86,15 @@ export default function FormFormMessage({
         }
         deleteTextAnswerServer();
       });
+    } else {
+      dispatch(setTextAnswerRequest());
+      deleteTextAnswerServer();
     }
   };
 
-  const validetionTextarea = (evt) => {
+  const validetionTextarea = (
+    evt: React.ChangeEvent<HTMLTextAreaElement>
+  ): { checkValid: boolean; taxtErr?: string } => {
     const regex = /[^\s]+/;
     const result = regex.test(evt.target.value);
     if (result) {
@@ -98,12 +104,12 @@ export default function FormFormMessage({
     }
   };
 
-  const changeValue = (evt) => {
+  const changeValue = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     dispatch(
       setValue({
         value: evt.target.value,
         name: evt.target.name,
-        errors: validetionTextarea(evt).taxtErr,
+        errors: validetionTextarea(evt).taxtErr ?? "",
         valid: validetionTextarea(evt).checkValid,
       })
     );
