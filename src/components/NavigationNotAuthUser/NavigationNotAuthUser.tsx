@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactNode } from 'react';
 
 import Style from './NavigationNotAuthUser.module.scss';
 
@@ -6,7 +6,7 @@ export default function NavigationNotAuthUser({
   children,
   text,
 }: {
-  children?: any;
+  children?: ReactNode;
   text: string;
 }) {
   return (
