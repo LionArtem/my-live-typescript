@@ -1,53 +1,61 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import Style from "./MessageUser.module.scss";
+import Style from './MessageUser.module.scss';
 
-import { selectUser } from "../../redax/slices/userSlice";
+import { selectUser } from '../../redax/slices/userSlice';
 import {
   fetchDeleteMessage,
   selectTopics,
   addQuote,
-} from "../../redax/slices/topicSlice";
+} from '../../redax/slices/topicSlice';
 
-import { getTimeLocal } from "../../utils/utils";
-import MessageUserPreloader from "./MessageUserPreloader";
-import EmptyPage from "../EmptyPage/EmptyPage";
-import ModulConfirmation from "../Moduls/ModulConfirmation/ModulConfirmation";
-import ModuleQuote from "../Moduls/ModuleQuote/ModuleQuote";
+import { getTimeLocal } from '../../utils/utils';
+import MessageUserPreloader from './MessageUserPreloader';
+import EmptyPage from '../EmptyPage/EmptyPage';
+import ModulConfirmation from '../Moduls/ModulConfirmation/ModulConfirmation';
+import ModuleQuote from '../Moduls/ModuleQuote/ModuleQuote';
 
 import {
   selectModuleConfirmation,
   isStatusModule,
-} from "../../redax/slices/moduleConfirmationSlice";
-import ModulePreloader from "../Moduls/ModulePreloader/ModulePreloader";
-import { URL_SERVER } from "../../utils/Constants";
+} from '../../redax/slices/moduleConfirmationSlice';
+import ModulePreloader from '../Moduls/ModulePreloader/ModulePreloader';
+import { URL_SERVER } from '../../utils/Constants';
+import { useAppDispatch } from '../../redax/store';
 
-export default function MessageUser({ getMessages }) {
+export default function MessageUser({
+  getMessages,
+}: {
+  getMessages: (page?: number) => void;
+}) {
   const navigation = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { allMessagesAndAuthors, user } = useSelector(selectUser);
   const { preloaderMessage } = useSelector(selectTopics);
-  const [messageId, isMessageId] = useState();
+  const [messageId, isMessageId] = useState('');
   const { statusModule } = useSelector(selectModuleConfirmation);
   const [modulePreloader, isModulePreloader] = useState(false);
   const [quotePopap, isQuotePopap] = useState(false);
   const [quote, isQuote] = useState(null);
 
-  const deleteMessage = (messageId) => {
+  const deleteMessage = (messageId: string): void => {
     isModulePreloader(true);
-    dispatch(
-      fetchDeleteMessage({
-        messageId,
-        topicId: localStorage.getItem("topicId"),
-      })
-    ).then((res) => {
-      if (res.meta.requestStatus === "fulfilled") {
-        getMessages();
-      }
-      isModulePreloader(false);
-    });
+    const topicId = localStorage.getItem('topicId');
+    if (topicId) {
+      dispatch(
+        fetchDeleteMessage({
+          messageId,
+          topicId: topicId,
+        })
+      ).then((res) => {
+        if (res.meta.requestStatus === 'fulfilled') {
+          getMessages();
+        }
+        isModulePreloader(false);
+      });
+    }
   };
 
   const openConfirmation = (messageId) => {
@@ -56,12 +64,12 @@ export default function MessageUser({ getMessages }) {
   };
 
   React.useEffect(() => {
-    return () => localStorage.removeItem("page");
+    return () => localStorage.removeItem('page');
   }, []);
 
   const openPageUser = (id) => {
-    localStorage.setItem("CurrentUserId", id);
-    navigation("/user");
+    localStorage.setItem('CurrentUserId', id);
+    navigation('/user');
   };
 
   const openFullQuote = (quote) => {
@@ -84,13 +92,13 @@ export default function MessageUser({ getMessages }) {
                     src={
                       obj.user.avatar
                         ? `${URL_SERVER}/${obj.user.avatar}`
-                        : "https://www.murrayglass.com/wp-content/uploads/2020/10/avatar-scaled.jpeg"
+                        : 'https://www.murrayglass.com/wp-content/uploads/2020/10/avatar-scaled.jpeg'
                     }
                     alt="аватарка"
                   />
                   <div className={Style.name}>
                     <h3 onClick={() => openPageUser(obj.user._id)}>
-                      {" "}
+                      {' '}
                       {obj.user.name}
                     </h3>
                     <p>{`(${obj.user.gender}.${obj.user.age})`}</p>
@@ -148,15 +156,15 @@ export default function MessageUser({ getMessages }) {
           </div>
         ))
       ) : (
-        <EmptyPage text={"Здесь пока нет сообщений."} />
+        <EmptyPage text={'Здесь пока нет сообщений.'} />
       )}
       {statusModule && (
         <ModulConfirmation
-          text={"Удалить сообщение?"}
+          text={'Удалить сообщение?'}
           confirm={() => deleteMessage(messageId)}
         />
       )}
-      {modulePreloader && <ModulePreloader text={"Удаление..."} />}
+      {modulePreloader && <ModulePreloader text={'Удаление...'} />}
       {quotePopap && <ModuleQuote text={quote} clickOverly={isQuotePopap} />}
     </>
   );
