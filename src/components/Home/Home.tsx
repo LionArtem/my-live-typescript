@@ -1,7 +1,6 @@
 import React from 'react';
 
-import Style from "./Home.module.scss";
-
+import Style from './Home.module.scss';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAuth, resetForm } from '../../redax/slices/authSlice';
@@ -11,13 +10,14 @@ import Authorization from '../Authorization/Authorization';
 import AuthorizedUser from '../AuthorizedUser/AuthorizedUser';
 import MenuApp from './MenuApp/MenuApp';
 import Footer from '../Footer/Footer';
+import { useAppDispatch } from '../../redax/store';
 
 export default function Home() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { token, fopmReg, fopmSign } = useSelector(selectAuth);
 
   React.useEffect(() => {
-    function closeByEscape(evt) {
+    function closeByEscape(evt: KeyboardEvent | React.KeyboardEvent): void {
       if (evt.key === 'Escape') {
         dispatch(resetForm());
       }
@@ -43,7 +43,7 @@ export default function Home() {
         </section>
       </main>
       <footer>
-        <Footer/>
+        <Footer />
       </footer>
     </div>
   );
