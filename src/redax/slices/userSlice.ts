@@ -35,7 +35,7 @@ export type Message = {
   _id: string;
 };
 
-interface Topic {
+export interface Topic {
   createdAt: string;
   messages: Message[];
   numberMessages: number;
