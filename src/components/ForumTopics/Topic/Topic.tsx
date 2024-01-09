@@ -10,6 +10,7 @@ import {
   changeErrGetMessage,
 } from '../../../redax/slices/topicSlice';
 import {
+  Message,
   Topic,
   fetchGetUserFindId,
   selectUser,
@@ -41,14 +42,14 @@ export default function Topic() {
 
   const { errServerUserMessage } = useSelector(selectUser);
 
-  const findUniqueAuthors = (res: Topic): string[] => {
+  const findUniqueAuthors = (res: Topic): unknown[] => {
     // собираю массив уникальных id users
     let set = new Set(); // лучше производительность
-    res.messages.forEach((element) => {
+    res.messages.forEach((element: Message) => {
       set.add(element.userId);
     });
     const arrUniqueUserId = Array.from(new Set(set));
-    // @ts-ignore
+
     return arrUniqueUserId;
 
     // const result = res.messages.reduce((acc, obj) => {
@@ -73,16 +74,22 @@ export default function Topic() {
         })
       ).then((resMessage) => {
         if (resMessage.meta.requestStatus === 'fulfilled') {
-          dispatch(
-            fetchGetUserFindId({
-              // @ts-ignore
-              arrIdUser: findUniqueAuthors(resMessage.payload),
-              // @ts-ignore
-              messages: resMessage.payload,
-            })
-          ).then(() => {
-            dispatch(isShowPreloaderMessage(false));
-          });
+          if (
+            typeof resMessage.payload === 'object' &&
+            resMessage.payload != null
+          ) {
+            const uniqueAuthors = findUniqueAuthors(
+              resMessage.payload as Topic
+            );
+            dispatch(
+              fetchGetUserFindId({
+                arrIdUser: uniqueAuthors as string[],
+                messages: resMessage.payload as Topic,
+              })
+            ).then(() => {
+              dispatch(isShowPreloaderMessage(false));
+            });
+          }
         }
       });
     }
