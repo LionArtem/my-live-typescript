@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Style from './TopicList.module.scss';
 
 import {
@@ -19,27 +19,32 @@ import {
   selectModuleConfirmation,
   isStatusModule,
 } from '../../../redax/slices/moduleConfirmationSlice';
+import { useAppDispatch } from '../../../redax/store';
 
-export default function TopicList({ getTopic, notTopics }) {
-  const dispatch = useDispatch();
+type TopicListProps = {
+  getTopic: (page?: number) => void;
+  notTopics: boolean;
+};
+
+export default function TopicList({ getTopic, notTopics }: TopicListProps) {
+  const dispatch = useAppDispatch();
   const { topicsInPage, preloaderTopic } = useSelector(selectTopics);
   const { user } = useSelector(selectUser);
   const { token } = useSelector(selectAuth);
-  // const [moduleConfirmation, isModuleConfirmation] = useState(false);
-  const [idTopic, isIdTopic] = useState();
+  const [idTopic, isIdTopic] = useState('');
   const [preloaderDelete, isPreloaderDelete] = useState(false);
   const { statusModule } = useSelector(selectModuleConfirmation);
 
   React.useEffect(() => {
     if (token) {
-      dispatch(fetchGetUser(token));
+      dispatch(fetchGetUser({ token }));
     }
   }, []);
 
-  const deleteTopic = (id) => {
+  const deleteTopic = (id: string): void => {
     dispatch(isStatusModule(false));
     isPreloaderDelete(true);
-    dispatch(fetchDeleteTopic(id)).then((res) => {
+    dispatch(fetchDeleteTopic({ id })).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         getTopic();
       } else {
@@ -49,7 +54,10 @@ export default function TopicList({ getTopic, notTopics }) {
     });
   };
 
-  const openConfirmation = (evt, id) => {
+  const openConfirmation = (
+    evt: React.MouseEvent<HTMLButtonElement>,
+    id: string
+  ): void => {
     evt.preventDefault();
     evt.stopPropagation();
     isIdTopic(id);
@@ -77,7 +85,7 @@ export default function TopicList({ getTopic, notTopics }) {
               </h1>
               <p>{getTimeLocal(obj.createdAt)}</p>
             </div>
-            {user.admin && (
+            {user?.admin && (
               <button
                 className={Style.button_delete}
                 onClick={(evt) => openConfirmation(evt, obj._id)}
