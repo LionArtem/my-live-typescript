@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
 import Style from './ModulConfirmation.module.scss';
 import ModulContainer from '../ModulContainer/ModulContainer';
 import { useDispatch } from 'react-redux';
 import { isStatusModule } from '../../../redax/slices/moduleConfirmationSlice';
 
-export default function ModulConfirmation({ text, confirm }) {
+type ModulConfirmationProps = {
+  text: string;
+  confirm: () => void;
+};
+
+export default function ModulConfirmation({
+  text,
+  confirm,
+}: ModulConfirmationProps) {
   const dispatch = useDispatch();
 
   const confirmYes = () => {
