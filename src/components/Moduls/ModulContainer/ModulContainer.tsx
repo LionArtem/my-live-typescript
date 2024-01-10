@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import Style from './ModulContainer.module.scss';
 
 type ModulContainerProps = {
-  clickOverly: () => void;
+  clickOverly?: () => void;
   children: ReactNode;
 };
 

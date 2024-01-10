@@ -2,7 +2,7 @@ import React from 'react';
 import Style from './ModulePreloader.module.scss';
 import ModulContainer from '../ModulContainer/ModulContainer';
 
-export default function ModulePreloader({ text }) {
+export default function ModulePreloader({ text }: { text: string }) {
   return (
     <ModulContainer>
       <div className={Style.conteiner}>
