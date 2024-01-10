@@ -1,7 +1,15 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import Style from './ModulContainer.module.scss';
 
-export default function ModulContainer({ clickOverly, children }) {
+type ModulContainerProps = {
+  clickOverly: () => void;
+  children: ReactNode;
+};
+
+export default function ModulContainer({
+  clickOverly,
+  children,
+}: ModulContainerProps) {
   return (
     <div
       onClick={(evt) => {
