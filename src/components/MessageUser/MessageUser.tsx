@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import Style from './MessageUser.module.scss';
@@ -38,7 +38,7 @@ export default function MessageUser({
   const { statusModule } = useSelector(selectModuleConfirmation);
   const [modulePreloader, isModulePreloader] = useState(false);
   const [quotePopap, isQuotePopap] = useState(false);
-  const [quote, isQuote] = useState(null);
+  const [quote, isQuote] = useState('');
 
   const deleteMessage = (messageId: string): void => {
     isModulePreloader(true);
@@ -58,7 +58,7 @@ export default function MessageUser({
     }
   };
 
-  const openConfirmation = (messageId) => {
+  const openConfirmation = (messageId: string): void => {
     isMessageId(messageId);
     dispatch(isStatusModule(true));
   };
@@ -67,12 +67,14 @@ export default function MessageUser({
     return () => localStorage.removeItem('page');
   }, []);
 
-  const openPageUser = (id) => {
-    localStorage.setItem('CurrentUserId', id);
-    navigation('/user');
+  const openPageUser = (id: string | undefined): void => {
+    if (id) {
+      localStorage.setItem('CurrentUserId', id);
+      navigation('/user');
+    }
   };
 
-  const openFullQuote = (quote) => {
+  const openFullQuote = (quote: string): void => {
     isQuote(quote);
     isQuotePopap(true);
   };
@@ -81,7 +83,7 @@ export default function MessageUser({
     <>
       {preloaderMessage ? (
         [...new Array(10)].map((_, i) => <MessageUserPreloader key={i} />)
-      ) : allMessagesAndAuthors.length > 0 ? (
+      ) : allMessagesAndAuthors && allMessagesAndAuthors.length > 0 ? (
         allMessagesAndAuthors.map((obj) => (
           <div key={obj.messages._id} className={Style.root}>
             <div className={Style.use_conteiner}>
@@ -97,7 +99,11 @@ export default function MessageUser({
                     alt="аватарка"
                   />
                   <div className={Style.name}>
-                    <h3 onClick={() => openPageUser(obj.user._id)}>
+                    <h3
+                      onClick={() =>
+                        openPageUser(obj.user ? obj.user._id : undefined)
+                      }
+                    >
                       {' '}
                       {obj.user.name}
                     </h3>
@@ -105,7 +111,7 @@ export default function MessageUser({
                   </div>
                   <p className={Style.sity}>{obj.user.town}</p>
                   <span>{getTimeLocal(obj.messages.createdAt)}</span>
-                  {user.admin && (
+                  {user?.admin && (
                     <button
                       onClick={() => openConfirmation(obj.messages._id)}
                       className={Style.button_delete}
@@ -122,7 +128,7 @@ export default function MessageUser({
                   <h3>Пользователь удалён</h3>
                   <p></p>
                   <span>{getTimeLocal(obj.messages.createdAt)}</span>
-                  {user.admin && (
+                  {user?.admin && (
                     <button
                       onClick={() => openConfirmation(obj.messages._id)}
                       className={Style.button_delete}
@@ -132,7 +138,7 @@ export default function MessageUser({
               )}
             </div>
             <div className={Style.containerMassage}>
-              {user.name && (
+              {user?.name && (
                 <span
                   className={Style.duttonQuote}
                   onClick={() => dispatch(addQuote(obj.messages.message))}
