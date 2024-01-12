@@ -9,6 +9,7 @@ import {
   selectformValidetion,
   defaultValues,
   killAllStateFormValidetion,
+  FormValidetionValue,
 } from '../../../redax/slices/formValidetionSlice';
 
 import {
@@ -97,14 +98,14 @@ export default function FormEditUser() {
     }
   }, []);
 
-  const findNoCoincidenceForm = (value1, value2) => {
+  const findNoCoincidenceForm = (value1: User, value2: FormValidetionValue) => {
     const valid =
       value1.age === value2.age &&
       value1.avatar === value2.avatar &&
       value1.email === value2.email &&
       value1.gender === value2.gender &&
       value1.name === value2.name &&
-      user.town === town;
+      user?.town === town;
     return valid;
   };
 
