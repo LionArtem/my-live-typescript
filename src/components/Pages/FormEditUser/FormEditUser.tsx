@@ -137,13 +137,13 @@ export default function FormEditUser() {
     }
   };
 
-  const changeValue = (evt) => {
+  const changeValue = (evt: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(
       setValue({
         value: evt.target.value,
         name: evt.target.name,
         errors: evt.target.validationMessage,
-        valid: evt.target.closest('form').checkValidity(),
+        valid: evt.target.closest('form')?.checkValidity(),
       })
     );
   };
