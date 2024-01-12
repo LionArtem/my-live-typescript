@@ -98,7 +98,10 @@ export default function FormEditUser() {
     }
   }, []);
 
-  const findNoCoincidenceForm = (value1: User, value2: FormValidetionValue) => {
+  const findNoCoincidenceForm = (
+    value1: User,
+    value2: FormValidetionValue
+  ): boolean => {
     const valid =
       value1.age === value2.age &&
       value1.avatar === value2.avatar &&
@@ -109,24 +112,28 @@ export default function FormEditUser() {
     return valid;
   };
 
-  const deleteTextAnswerServer = () => {
+  const deleteTextAnswerServer = (): void => {
     setTimeout(() => {
       dispatch(addTextSuccess(''));
       dispatch(setSuccessRequest(false));
     }, 1500);
   };
 
-  const hendelSumit = (evt) => {
+  const hendelSumit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (findNoCoincidenceForm(user, value)) {
-      dispatch(addTextSuccess('изменения сохранены'));
-      dispatch(setSuccessRequest(true));
-      deleteTextAnswerServer();
-    } else {
-      dispatch(fetchPatchUser({ token, town })).then(() => {
+    if (user) {
+      if (findNoCoincidenceForm(user, value)) {
+        dispatch(addTextSuccess('изменения сохранены'));
+        dispatch(setSuccessRequest(true));
         deleteTextAnswerServer();
-      });
+      } else {
+        if (token) {
+          dispatch(fetchPatchUser({ token, town })).then(() => {
+            deleteTextAnswerServer();
+          });
+        }
+      }
     }
   };
 
