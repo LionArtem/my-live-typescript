@@ -137,7 +137,7 @@ export default function FormEditUser() {
     }
   };
 
-  const changeValue = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const changeValue = (evt: React.ChangeEvent<HTMLInputElement>): void => {
     dispatch(
       setValue({
         value: evt.target.value,
@@ -148,10 +148,12 @@ export default function FormEditUser() {
     );
   };
 
-  const openListTown = () => {
+  const openListTown = (): void => {
     const clue = townRef.current?.getBoundingClientRect();
-    isCitiesTop(clue.height);
-    isListTown(!listTown);
+    if (clue) {
+      isCitiesTop(clue.height);
+      isListTown(!listTown);
+    }
   };
 
   const changeValueTown = (town) => {
