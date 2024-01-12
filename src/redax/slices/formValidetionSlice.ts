@@ -9,6 +9,7 @@ export type FormValidetionValue = {
   password?: string;
   textarea?: string;
   topic?: string;
+  avatar?: string
 };
 
 // type FormValidetionErr = {
