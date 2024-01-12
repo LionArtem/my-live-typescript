@@ -156,14 +156,18 @@ export default function FormEditUser() {
     }
   };
 
-  const changeValueTown = (town: string) => {
+  const changeValueTown = (town: string): void => {
     setTown(town);
     openListTown();
     dispatch(setValid(true));
   };
 
-  let search = true;
-  const searchTown = (evt, arr, time) => {
+  let search: boolean = true;
+  const searchTown = (
+    evt: React.ChangeEvent<HTMLInputElement>,
+    arr: AllTown[],
+    time: number
+  ): void => {
     if (search) {
       setTimeout(() => {
         const newArr = arr.filter((val) =>
