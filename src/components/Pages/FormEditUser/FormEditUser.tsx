@@ -156,7 +156,7 @@ export default function FormEditUser() {
     }
   };
 
-  const changeValueTown = (town) => {
+  const changeValueTown = (town: string) => {
     setTown(town);
     openListTown();
     dispatch(setValid(true));
