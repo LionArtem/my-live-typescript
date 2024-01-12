@@ -55,7 +55,7 @@ export default function FormEditUser() {
 
   const addSityInList = (
     evt: React.UIEvent<HTMLUListElement>,
-    arr: AllTown[]
+    arr: AllTown[] | undefined
   ) => {
     const allHeight = Math.floor((evt.target as HTMLUListElement).scrollHeight);
     const startDocument = Math.floor(
@@ -64,7 +64,8 @@ export default function FormEditUser() {
 
     if (
       allHeight - startDocument <=
-      (evt.target as HTMLUListElement).offsetHeight
+        (evt.target as HTMLUListElement).offsetHeight &&
+      arr
     ) {
       catList(allTown, arr.length + 10);
     }
@@ -220,7 +221,7 @@ export default function FormEditUser() {
             ></input>
             <label className={Style.title}>м</label>
             <input
-              checked={value.gender === 'м' ? 'checked' : ''}
+              checked={value.gender === 'м' ? true : false}
               className={Style.radio}
               value="м"
               onChange={(evt) => changeValue(evt)}
@@ -231,7 +232,7 @@ export default function FormEditUser() {
 
             <label className={Style.title}>ж</label>
             <input
-              checked={value.gender === 'ж' ? 'checked' : ''}
+              checked={value.gender === 'ж' ? true : false}
               className={Style.radio}
               value="ж"
               onChange={(evt) => changeValue(evt)}
