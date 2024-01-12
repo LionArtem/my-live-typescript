@@ -26,11 +26,12 @@ import { selectAuth } from "../../../redax/slices/authSlice";
 import ErrServer from "../../ErrServer/ErrServer";
 import { AllTown, allTown } from "../../../utils/AllTown";
 import UserAvatarEdit from "../../UserAvatarEdit/UserAvatarEdit";
+import { useAppDispatch } from "../../../redax/store";
 
 export default function FormEditUser() {
   const townRef = useRef<HTMLDivElement>(null);
   const sityRef = useRef<HTMLUListElement>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { value, errors, valid } = useSelector(selectformValidetion);
   const {
     user,
@@ -49,11 +50,19 @@ export default function FormEditUser() {
     setShowCities(list.slice(0, num));
   };
 
-  const addSityInList = (evt, arr) => {
-    const allHeight = Math.floor(evt.target.scrollHeight);
-    const startDocument = Math.floor(evt.target.scrollTop);
+  const addSityInList = (
+    evt: React.UIEvent<HTMLUListElement>,
+    arr: AllTown[]
+  ) => {
+    const allHeight = Math.floor((evt.target as HTMLUListElement).scrollHeight);
+    const startDocument = Math.floor(
+      (evt.target as HTMLUListElement).scrollTop
+    );
 
-    if (allHeight - startDocument <= evt.target.offsetHeight) {
+    if (
+      allHeight - startDocument <=
+      (evt.target as HTMLUListElement).offsetHeight
+    ) {
       catList(allTown, arr.length + 10);
     }
   };
