@@ -24,12 +24,12 @@ import ButtonSubmit from "../../Buttons/ButtonSubmit/ButtonSubmit";
 import TextInteractionForm from "../../TextInteractionForm/TextInteractionForm";
 import { selectAuth } from "../../../redax/slices/authSlice";
 import ErrServer from "../../ErrServer/ErrServer";
-import { allTown } from "../../../utils/AllTown";
+import { AllTown, allTown } from "../../../utils/AllTown";
 import UserAvatarEdit from "../../UserAvatarEdit/UserAvatarEdit";
 
 export default function FormEditUser() {
-  const townRef = useRef();
-  const sityRef = useRef();
+  const townRef = useRef<HTMLDivElement>(null);
+  const sityRef = useRef<HTMLUListElement>(null);
   const dispatch = useDispatch();
   const { value, errors, valid } = useSelector(selectformValidetion);
   const {
@@ -41,11 +41,11 @@ export default function FormEditUser() {
     errServer,
   } = useSelector(selectUser);
   const [listTown, isListTown] = useState(false);
-  const [showCities, setShowCities] = useState([]);
+  const [showCities, setShowCities] = useState<AllTown[]>();
   const [town, setTown] = useState("");
   const [citiesTop, isCitiesTop] = useState(0);
 
-  const catList = (list, num) => {
+  const catList = (list: AllTown[], num: number) => {
     setShowCities(list.slice(0, num));
   };
 
