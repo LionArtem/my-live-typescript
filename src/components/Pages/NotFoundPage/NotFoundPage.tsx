@@ -1,5 +1,3 @@
-import React from 'react';
-
 import style from './NotFoundPage.module.scss';
 
 export default function NotFoundPage() {
