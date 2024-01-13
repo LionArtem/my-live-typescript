@@ -1,4 +1,3 @@
-import React from 'react';
 import Stule from './PageAdmin.module.scss';
 import { useNavigate } from 'react-router-dom';
 import ButtonsNavigation from '../../Buttons/ButtonsNavigation/ButtonsNavigation';
