@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
-export type FormValidetionValue = {
+export interface FormValidetionValue  {
   age?: number;
   email?: string;
   gender?: string;

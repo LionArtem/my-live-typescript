@@ -1,16 +1,25 @@
 import React from 'react';
 import Style from './Pagination.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   selectPagination,
   pointNumberPagination,
 } from '../../redax/slices/paginationSlice';
+import { useAppDispatch } from '../../redax/store';
 
-export default function Pagination({ getNumberPage, numberPages }) {
-  const dispatch = useDispatch();
+type PaginationProps = {
+  getNumberPage: (page: number) => void;
+  numberPages: number[];
+};
+
+export default function Pagination({
+  getNumberPage,
+  numberPages,
+}: PaginationProps) {
+  const dispatch = useAppDispatch();
   const { paginationNumber } = useSelector(selectPagination);
 
-  React.useEffect(() => {
+  React.useEffect((): (() => void) => {
     return () => dispatch(pointNumberPagination(1));
   }, []);
 
@@ -24,7 +33,7 @@ export default function Pagination({ getNumberPage, numberPages }) {
             onClick={() => {
               dispatch(pointNumberPagination(i + 1));
               getNumberPage(i + 1);
-              localStorage.setItem('page', i + 1);
+              localStorage.setItem('page', String(i + 1));
             }}
           >
             {i + 1}
