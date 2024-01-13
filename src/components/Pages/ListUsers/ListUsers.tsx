@@ -54,26 +54,28 @@ export default function ListUsers() {
     return () => localStorage.removeItem('page');
   }, []);
 
-  const deleteUser = () => {
-    dispatch(isStatusModule(false));
-    isTextPreloader('Удаление...');
-    isShowPreloader(true);
-    usersApi
-      .deleteUsers(token, idUser)
-      .then((res) => {
-        getUsers();
-      })
-      .catch((err) => {
-        console.log(err);
-        isTextPreloader('');
-      })
-      .finally(() => {
-        isIdUser('');
-        isShowPreloader(false);
-      });
+  const deleteUser = (): void => {
+    if (token) {
+      dispatch(isStatusModule(false));
+      isTextPreloader('Удаление...');
+      isShowPreloader(true);
+      usersApi
+        .deleteUsers(token, idUser)
+        .then((res) => {
+          getUsers();
+        })
+        .catch((err) => {
+          console.log(err);
+          isTextPreloader('');
+        })
+        .finally(() => {
+          isIdUser('');
+          isShowPreloader(false);
+        });
+    }
   };
 
-  const clickButtonDelete = (id) => {
+  const clickButtonDelete = (id: string): void => {
     isIdUser(id);
     dispatch(isStatusModule(true));
   };
@@ -91,7 +93,7 @@ export default function ListUsers() {
         <ul className={Style.ListUsers_containerCard}>
           {showSceleton
             ? [...new Array(10)].map((_, i) => <ListUsersSceleton key={i} />)
-            : users.map((user) => (
+            : users?.map((user) => (
                 <li key={user._id}>
                   <UserCard user={user} />
                   <ButtonDelete
@@ -103,7 +105,7 @@ export default function ListUsers() {
               ))}
         </ul>
       )}
-      {numberPages.length > 1 && (
+      {numberPages && numberPages.length > 1 && (
         <Pagination getNumberPage={getUsers} numberPages={numberPages} />
       )}
       {statusModule && (
