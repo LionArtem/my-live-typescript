@@ -65,15 +65,15 @@ export default function UserAvatarEdit() {
     }
   };
 
-  const deleteFoto = (token, id) => {
-    if (!user.avatar && !file) {
+  const deleteFoto = (token: string, id: string): void => {
+    if (!user?.avatar && !file) {
       return;
     }
     isShowPreloader(true);
     usersApi
       .deleteUsersAvatar(token, id)
-      .then((res) => {
-        setFile(null);
+      .then(() => {
+        setFile(undefined);
         dispatch(resetUserAvatar(''));
       })
       .catch((err) => {
