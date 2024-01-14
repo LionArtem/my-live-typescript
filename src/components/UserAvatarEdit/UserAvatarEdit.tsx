@@ -16,7 +16,7 @@ export default function UserAvatarEdit() {
   const refInputFile = useRef<HTMLInputElement>(null);
   const { token } = useSelector(selectAuth);
   const { user, showSceletonPage } = useSelector(selectUser);
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<string | ArrayBuffer>();
   const [errorLoadingFile, setErrorLoadingFile] = useState('');
   const [showPreloader, isShowPreloader] = useState(false);
 
@@ -41,20 +41,28 @@ export default function UserAvatarEdit() {
     }
   };
 
-  const sendFile = ({ result, file }) => {
+  const sendFile = ({
+    result,
+    file,
+  }: {
+    result: string | ArrayBuffer;
+    file: File;
+  }): void => {
     const avatar = new FormData();
     avatar.append('avatar', file);
 
-    usersApi
-      .addAvatar(avatar, token)
-      .then(() => {
-        setFile(result);
-      })
-      .catch((err) => {
-        setErrorLoadingFile(err.message);
-        setTimeout(() => setErrorLoadingFile(''), 3000);
-      })
-      .finally(() => isShowPreloader(false));
+    if (token) {
+      usersApi
+        .addAvatar(avatar, token)
+        .then(() => {
+          setFile(result);
+        })
+        .catch((err) => {
+          setErrorLoadingFile(err.message);
+          setTimeout(() => setErrorLoadingFile(''), 3000);
+        })
+        .finally(() => isShowPreloader(false));
+    }
   };
 
   const deleteFoto = (token, id) => {

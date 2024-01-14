@@ -85,13 +85,13 @@ class UserApi {
     }).then(this._checkResponse);
   }
 
-  public addAvatar(file: File, token: string): Promise<any> {
+  public addAvatar(avatar: FormData, token: string): Promise<any> {
     return fetch(`${this.baseUrl}/add-file`, {
       method: 'POST',
       headers: {
         authorization: `Bearer ${localStorage.getItem('token') || token}`,
       },
-      body: file,
+      body: avatar,
     }).then(this._checkResponse);
   }
 
