@@ -65,22 +65,24 @@ export default function UserAvatarEdit() {
     }
   };
 
-  const deleteFoto = (token: string, id: string): void => {
+  const deleteFoto = (token: string | null, id: string | undefined): void => {
     if (!user?.avatar && !file) {
       return;
     }
-    isShowPreloader(true);
-    usersApi
-      .deleteUsersAvatar(token, id)
-      .then(() => {
-        setFile(undefined);
-        dispatch(resetUserAvatar(''));
-      })
-      .catch((err) => {
-        setErrorLoadingFile(err.message);
-        setTimeout(() => setErrorLoadingFile(''), 3000);
-      })
-      .finally(() => isShowPreloader(false));
+    if (token && id) {
+      isShowPreloader(true);
+      usersApi
+        .deleteUsersAvatar(token, id)
+        .then(() => {
+          setFile(undefined);
+          dispatch(resetUserAvatar(''));
+        })
+        .catch((err) => {
+          setErrorLoadingFile(err.message);
+          setTimeout(() => setErrorLoadingFile(''), 3000);
+        })
+        .finally(() => isShowPreloader(false));
+    }
   };
 
   return (
@@ -94,8 +96,8 @@ export default function UserAvatarEdit() {
               <img
                 src={
                   file
-                    ? file
-                    : user.avatar
+                    ? String(file)
+                    : user?.avatar
                     ? `${URL_SERVER}/${user.avatar}`
                     : 'https://www.murrayglass.com/wp-content/uploads/2020/10/avatar-scaled.jpeg'
                 }
@@ -105,11 +107,11 @@ export default function UserAvatarEdit() {
             <div className={Style.containerButton}>
               <div
                 className={`${Style.button} ${Style.button_edit_foto}`}
-                onClick={() => refInputFile.current.click()}
+                onClick={() => refInputFile.current?.click()}
               ></div>
               <div
                 className={`${Style.button} ${Style.button_delete_foto}`}
-                onClick={() => deleteFoto(token, user._id)}
+                onClick={() => deleteFoto(token, user?._id)}
               ></div>
             </div>
           </div>
