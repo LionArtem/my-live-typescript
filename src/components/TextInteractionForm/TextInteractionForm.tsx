@@ -5,7 +5,7 @@ export default function TextInteractionForm({
   request = false,
 }: {
   text: string;
-  request: boolean;
+  request?: boolean;
 }) {
   return (
     <span className={`${Style.error} ${request && Style.success} `}>
