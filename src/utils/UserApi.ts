@@ -9,12 +9,12 @@ type UserMeParams = {
   token: string;
 };
 
-type Headers = {
+export type Headers = {
   authorization: string;
   'content-type': string;
 };
 
-interface UserApiParams {
+export interface Params {
   baseUrl: string;
   headers: Headers;
 }
@@ -22,7 +22,7 @@ interface UserApiParams {
 class UserApi {
   readonly baseUrl: string;
   readonly headers: Headers;
-  constructor(params: UserApiParams) {
+  constructor(params: Params) {
     this.baseUrl = params.baseUrl;
     this.headers = params.headers;
   }
