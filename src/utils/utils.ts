@@ -1,6 +1,6 @@
-const getTimeLocal = (date) => {
+const getTimeLocal = (date: string): string | undefined => {
   if (!date) {
-    return 
+    return;
   }
   //const timeLocal = new Date(date).toString();
   //const arrTimeLocal = timeLocal.split(' ');

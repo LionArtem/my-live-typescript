@@ -1,4 +1,3 @@
-import React from 'react';
 import Style from './ModuleBigFoto.module.scss';
 import ModulContainer from '../ModulContainer/ModulContainer';
 import { URL_SERVER } from '../../../utils/Constants';

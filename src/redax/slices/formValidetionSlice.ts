@@ -12,13 +12,6 @@ export interface FormValidetionValue  {
   avatar?: string
 };
 
-// type FormValidetionErr = {
-//   age?: string;
-//   email?: string;
-//   gender?: string;
-//   name?: string;
-// };
-
 interface ValueSet {
   value?: string;
   errors: String;

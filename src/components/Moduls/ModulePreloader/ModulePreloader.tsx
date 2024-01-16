@@ -1,4 +1,3 @@
-import React from 'react';
 import Style from './ModulePreloader.module.scss';
 import ModulContainer from '../ModulContainer/ModulContainer';
 

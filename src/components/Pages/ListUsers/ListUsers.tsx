@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Style from './ListUsers.module.scss';
 import { usersApi } from '../../../utils/UserApi';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectAuth } from '../../../redax/slices/authSlice';
 import {
   selectModuleConfirmation,

@@ -16,19 +16,22 @@ export default function PageUser() {
   const [showBigAvatar, isShowBigAvatar] = useState(false);
 
   useEffect(() => {
-    isShowSceleton(true);
-    notAuthRequest
-      .getUserId(localStorage.getItem('CurrentUserId'))
-      .then((user) => {
-        isUser(user);
-      })
-      .catch((err) => {
-        isErr(true);
-        isErrText(err.message);
-      })
-      .finally(() => isShowSceleton(false));
+    const currentUserId = localStorage.getItem('CurrentUserId');
+    if (currentUserId) {
+      isShowSceleton(true);
+      notAuthRequest
+        .getUserId(currentUserId)
+        .then((user) => {
+          isUser(user);
+        })
+        .catch((err) => {
+          isErr(true);
+          isErrText(err.message);
+        })
+        .finally(() => isShowSceleton(false));
 
-    return () => localStorage.removeItem('CurrentUserId');
+      return () => localStorage.removeItem('CurrentUserId');
+    }
   }, []);
 
   const closeBigFoto = () => {

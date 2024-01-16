@@ -161,7 +161,9 @@ export default function ForumTopics() {
                   maxLength={30}
                 ></input>
                 {showErrValidation && (
-                  <TextInteractionForm text={errors.topic} />
+                  <TextInteractionForm
+                    text={errors.topic ? errors.topic : ''}
+                  />
                 )}
               </div>
               <ButtonSubmit

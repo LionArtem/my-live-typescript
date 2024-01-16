@@ -11,7 +11,7 @@ import {
 } from '../../../redax/slices/topicSlice';
 import {
   Message,
-  Topic,
+  TopicType,
   fetchGetUserFindId,
   selectUser,
 } from '../../../redax/slices/userSlice';
@@ -42,7 +42,7 @@ export default function Topic() {
 
   const { errServerUserMessage } = useSelector(selectUser);
 
-  const findUniqueAuthors = (res: Topic): unknown[] => {
+  const findUniqueAuthors = (res: TopicType): unknown[] => {
     // собираю массив уникальных id users
     let set = new Set(); // лучше производительность
     res.messages.forEach((element: Message) => {
@@ -79,12 +79,12 @@ export default function Topic() {
             resMessage.payload != null
           ) {
             const uniqueAuthors = findUniqueAuthors(
-              resMessage.payload as Topic
+              resMessage.payload as TopicType
             );
             dispatch(
               fetchGetUserFindId({
                 arrIdUser: uniqueAuthors as string[],
-                messages: resMessage.payload as Topic,
+                messages: resMessage.payload as TopicType,
               })
             ).then(() => {
               dispatch(isShowPreloaderMessage(false));

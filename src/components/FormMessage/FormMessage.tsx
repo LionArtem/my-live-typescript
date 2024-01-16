@@ -153,7 +153,11 @@ export default function FormFormMessage({
               required
               maxLength={500}
             ></textarea>
-            <TextInteractionForm text={errValidation && errors.textarea} />
+            <TextInteractionForm
+              text={
+                errValidation ? (errors.textarea ? errors.textarea : '') : ''
+              }
+            />
             <ButtonSubmit
               valid={valid}
               showPreloader={preloader}

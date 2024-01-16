@@ -24,7 +24,7 @@ export interface User {
 
 interface UserFindIdProps {
   arrIdUser: string[];
-  messages: Topic;
+  messages: TopicType;
 }
 
 export type Message = {
@@ -35,7 +35,7 @@ export type Message = {
   _id: string;
 };
 
-export interface Topic {
+export interface TopicType {
   createdAt: string;
   messages: Message[];
   numberMessages: number;
@@ -45,7 +45,7 @@ export interface Topic {
 
 interface UserFindIdData {
   data: User[];
-  topic: Topic;
+  topic: TopicType;
 }
 
 export const fetchGetUser = createAsyncThunk<User, { token: string }>(

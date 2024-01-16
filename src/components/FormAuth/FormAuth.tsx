@@ -1,26 +1,26 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 import {
   fetchAddUser,
   fetchLoginUser,
   selectAuth,
   resetTextArrAnswerServer,
   resetForm,
-} from "../../redax/slices/authSlice";
+} from '../../redax/slices/authSlice';
 
 import {
   setValue,
   selectformValidetion,
   killAllStateFormValidetion,
   setValid,
-} from "../../redax/slices/formValidetionSlice";
+} from '../../redax/slices/formValidetionSlice';
 
-import Style from "./FormAuth.module.scss";
-import TextInteractionForm from "../TextInteractionForm/TextInteractionForm";
-import ButtonSubmit from "../Buttons/ButtonSubmit/ButtonSubmit";
-import ModulContainer from "../Moduls/ModulContainer/ModulContainer";
-import { useAppDispatch } from "../../redax/store";
+import Style from './FormAuth.module.scss';
+import TextInteractionForm from '../TextInteractionForm/TextInteractionForm';
+import ButtonSubmit from '../Buttons/ButtonSubmit/ButtonSubmit';
+import ModulContainer from '../Moduls/ModulContainer/ModulContainer';
+import { useAppDispatch } from '../../redax/store';
 
 type FormAuthProps = {
   textButton: string;
@@ -38,7 +38,7 @@ export default function FormAuth({ textButton, text }: FormAuthProps) {
 
   const loginUser = (email: string, password: string): void => {
     dispatch(fetchLoginUser({ email, password })).then((res) => {
-      if (res.meta.requestStatus === "fulfilled") {
+      if (res.meta.requestStatus === 'fulfilled') {
         dispatch(resetForm());
         dispatch(killAllStateFormValidetion());
       } else {
@@ -63,8 +63,8 @@ export default function FormAuth({ textButton, text }: FormAuthProps) {
   };
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>): void => {
-    checkEmptyField(!value.email, "email", "Заполните это поле");
-    checkEmptyField(!value.password, "password", "Заполните это поле");
+    checkEmptyField(!value.email, 'email', 'Заполните это поле');
+    checkEmptyField(!value.password, 'password', 'Заполните это поле');
     evt.preventDefault();
     if (!valid) {
       isFocusInputEmail(true);
@@ -76,7 +76,7 @@ export default function FormAuth({ textButton, text }: FormAuthProps) {
 
     if (fopmReg) {
       dispatch(fetchAddUser({ email, password })).then((res) => {
-        if (res.meta.requestStatus === "fulfilled") {
+        if (res.meta.requestStatus === 'fulfilled') {
           loginUser(email, password);
         } else {
           dispatch(setValid(false));
@@ -96,7 +96,7 @@ export default function FormAuth({ textButton, text }: FormAuthProps) {
         value: evt.target.value,
         name: evt.target.name,
         errors: evt.target.validationMessage,
-        valid: evt.target.closest("form")?.checkValidity(),
+        valid: evt.target.closest('form')?.checkValidity(),
       })
     );
   };
@@ -124,7 +124,7 @@ export default function FormAuth({ textButton, text }: FormAuthProps) {
           onBlur={() => isFocusInputEmail(true)}
           onFocus={() => isFocusInputEmail(false)}
           pattern="[a-zA-Z0-9._\-]+@[a-zA-Z0-9._\-]+\.[a-zA-Z0-9_\-]+"
-          value={value.email ?? ""}
+          value={value.email ?? ''}
           onChange={(evt) => {
             collectValidetion(evt);
           }}
@@ -133,11 +133,13 @@ export default function FormAuth({ textButton, text }: FormAuthProps) {
           placeholder="email"
           required
         ></input>
-        <TextInteractionForm text={focusInputEmail && errors.email}  />
+        <TextInteractionForm
+          text={focusInputEmail ? (errors.email ? errors.email : '') : ''}
+        />
         <input
           onBlur={() => isFocusInputPassword(true)}
           onFocus={() => isFocusInputPassword(false)}
-          value={value.password ?? ""}
+          value={value.password ?? ''}
           onChange={(evt) => {
             collectValidetion(evt);
           }}
@@ -147,7 +149,11 @@ export default function FormAuth({ textButton, text }: FormAuthProps) {
           minLength={8}
           required
         ></input>
-        <TextInteractionForm text={focusInputPassword && errors.password} />
+        <TextInteractionForm
+          text={
+            focusInputPassword ? (errors.password ? errors.password : '') : ''
+          }
+        />
         <ButtonSubmit
           valid={true}
           showPreloader={showPreloader}

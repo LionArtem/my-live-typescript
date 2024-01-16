@@ -1,4 +1,3 @@
-import React from 'react';
 import Style from './ErrServer.module.scss';
 
 export default function ErrServer({ textErr }: { textErr: string }) {

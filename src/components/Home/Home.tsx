@@ -2,7 +2,7 @@ import React from 'react';
 
 import Style from './Home.module.scss';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectAuth, resetForm } from '../../redax/slices/authSlice';
 
 import Header from '../Header/Header';
