@@ -5,7 +5,7 @@ import { notAuthRequest } from '../../utils/NotAuthRequest';
 import { Message, User } from './userSlice';
 import { RootState } from '../store';
 
-interface MessageTopicParams {
+export interface MessageTopicParams {
   id: string;
   message: string;
   userId: string;
