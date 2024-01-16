@@ -1,15 +1,14 @@
 import { URL_SERVER } from './Constants';
 
+export type AuthApi = {
+  baseUrl: string;
+  headers: { 'content-type': string };
+};
+
 class Auth {
   readonly baseUrl: string;
   readonly headers: { 'content-type': string };
-  constructor({
-    baseUrl,
-    headers,
-  }: {
-    baseUrl: string;
-    headers: { 'content-type': string };
-  }) {
+  constructor({ baseUrl, headers }: AuthApi) {
     this.baseUrl = baseUrl;
     this.headers = headers;
   }
