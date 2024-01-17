@@ -62,7 +62,9 @@ export default function Topic() {
   };
 
   const getMessages = (
-    page = Number(localStorage.getItem('page')) ?? 1
+    page = localStorage.getItem('page')
+      ? Number(localStorage.getItem('page'))
+      : 1
   ): void => {
     dispatch(isShowPreloaderMessage(true));
     const topicId = localStorage.getItem('topicId');

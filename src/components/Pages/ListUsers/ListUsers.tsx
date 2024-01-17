@@ -32,8 +32,14 @@ export default function ListUsers() {
   const [idUser, isIdUser] = useState('');
   const [textPreloader, isTextPreloader] = useState('');
 
-  const getUsers = (page = Number(localStorage.getItem('page')) ?? 1): void => {
+  const getUsers = (
+    page = localStorage.getItem('page')
+      ? Number(localStorage.getItem('page'))
+      : 1
+  ): void => {
     if (token) {
+      console.log(page);
+
       isShowSceleton(true);
       usersApi
         .getUsers(token, page)

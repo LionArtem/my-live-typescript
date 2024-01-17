@@ -46,7 +46,11 @@ export default function ForumTopics() {
   const [validButton, isValidButton] = useState(false);
   const [notTopics, isNotTopics] = useState(false);
 
-  const getTopic = (page = Number(localStorage.getItem('page')) ?? 1): void => {
+  const getTopic = (
+    page = localStorage.getItem('page')
+      ? Number(localStorage.getItem('page'))
+      : 1
+  ): void => {
     dispatch(fetchGetTopicPaginetion({ page })).then(() => isNotTopics(true));
   };
 
