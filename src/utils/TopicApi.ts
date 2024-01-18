@@ -14,7 +14,7 @@ class TopicApi {
     return fetch(this.baseUrl, {
       method: 'POST',
       headers: this.headers,
-      body: JSON.stringify({ title }),
+      body: JSON.stringify(title),
     }).then(this._checkResponse);
   }
 
@@ -53,7 +53,7 @@ class TopicApi {
   }
 
   deleteTopic(params: { id: string }) {
-    return fetch(`${this.baseUrl}/${params}`, {
+    return fetch(`${this.baseUrl}/${params.id}`, {
       method: 'DELETE',
       headers: this.headers,
     }).then(this._checkResponse);

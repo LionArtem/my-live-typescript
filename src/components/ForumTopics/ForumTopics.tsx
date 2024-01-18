@@ -70,7 +70,7 @@ export default function ForumTopics() {
     );
   };
 
-  const createTopic = (text: string): void => {
+  const createTopic = (text: string): void => {   
     dispatch(fetchAddTopic({ title: text })).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         setTimeout(() => dispatch(resetSuccessRequest()), 1500);
